@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sigue mi Huella | Que ninguna adopción termine en abandono</title>
+  <meta name="description" content="Acompañamiento después de la adopción para el albergue Emilia Rescata, de Huancayo. Una foto y tres preguntas al mes para saber que cada perro tiene un buen hogar.">
+  <meta name="theme-color" content="#1c1410">
+  <script>
+    /* Activa los estados ocultos iniciales antes del primer pintado para evitar parpadeos.
+       Si el motor no llega a cargar, se retira para que todo el contenido quede visible. */
+    (function () {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var raiz = document.documentElement;
+      raiz.classList.add('js-movimiento');
+      setTimeout(function () { if (!window.portadaLista) raiz.classList.remove('js-movimiento'); }, 4000);
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/tema.css" rel="stylesheet">
+  <link href="css/movimiento.css" rel="stylesheet">
+  <link href="css/portada.css" rel="stylesheet">
+  <link rel="icon" href="img/silueta.svg" type="image/svg+xml">
+  <link rel="preload" href="img/portada.svg" as="image">
+</head>
+<body class="portada-publica">
+  <a class="btn btn-primary saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+  <!-- Silueta reutilizable (se colorea con currentColor desde CSS) -->
+  <svg class="d-none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="perro" viewBox="10 18 80 74">
+      <path d="M30 90 C27 70 31 52 45 45 C56 40 63 48 65 60 L67 90 Z"/><circle cx="62" cy="32" r="13"/><ellipse cx="75" cy="36" rx="9" ry="6"/><path d="M52 22 C46 29 46 41 52 45 C57 38 58 29 52 22 Z"/><path d="M33 85 C18 86 13 75 17 66 C20 74 26 79 35 78 Z"/><rect x="55" y="58" width="8" height="32" rx="3"/>
+    </symbol>
+  </svg>
+
+  <!-- Barra de navegacion: oculta sobre la portada, aparece al pasarla -->
+  <nav id="barra" class="navbar navbar-expand-lg navbar-smh fixed-top barra-portada" aria-label="Navegación principal">
+    <div class="container">
+      <a class="marca" href="index.html"><i class="bi bi-heart-pulse" aria-hidden="true"></i> Sigue mi Huella</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-principal" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir el menú">
+        <i class="bi bi-list fs-2" aria-hidden="true"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="menu-principal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1 pb-3 pb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#problema">El problema</a></li>
+          <li class="nav-item"><a class="nav-link" href="#como-funciona">Cómo funciona</a></li>
+          <li class="nav-item"><a class="nav-link" href="#semaforo">Semáforo</a></li>
+          <li class="nav-item"><a class="nav-link" href="#perros">Perros</a></li>
+          <li class="nav-item"><a class="nav-link" href="apadrinar.html">Apadrina</a></li>
+          <li class="nav-item ms-lg-2 pt-2 pt-lg-0"><a class="btn btn-primary" href="ingresar.html"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i> Ingresar</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main id="contenido" tabindex="-1">
+
+    <!-- La portada queda fija mientras "El problema" sube por encima -->
+    <div class="portada-escena">
+      <div class="portada-testigo" aria-hidden="true"></div>
+
+      <header id="portada" class="portada">
+        <img class="portada-foto" src="img/portada.svg" alt="Atardecer en el valle del Mantaro con la silueta de un perro mirando el horizonte" width="1600" height="1000" fetchpriority="high">
+        <div class="portada-degradado" aria-hidden="true"></div>
+
+        <div class="portada-contenido container">
+          <div class="col-lg-10 col-xl-9">
+            <p class="antetitulo portada-antetitulo revelar" style="--i:0">Emilia Rescata · Huancayo</p>
+            <h1 id="titulo-portada" class="titulo-portada portada-titulo">Sigue mi Huella</h1>
+            <p class="portada-frase revelar" style="--i:5">Que ninguna adopción termine en abandono.</p>
+            <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 mt-4 pt-2 revelar" style="--i:7">
+              <a class="btn btn-ambar btn-lg" href="ingresar.html"><i class="bi bi-house-heart" aria-hidden="true"></i> Soy adoptante</a>
+              <a class="btn btn-claro btn-lg" href="ingresar.html?rol=albergue"><i class="bi bi-heart-pulse" aria-hidden="true"></i> Soy del albergue</a>
+            </div>
+          </div>
+        </div>
+
+        <a class="indicador-scroll" href="#problema" aria-label="Bajar a la siguiente sección">
+          <i class="bi bi-chevron-double-down flotar" aria-hidden="true"></i>
+        </a>
+      </header>
+
+      <!-- =========================================================
+           El problema, en tres momentos
+           ========================================================= -->
+      <section id="problema" class="seccion-oscura problema" aria-labelledby="t-problema">
+
+        <!-- Momento 1: diez siluetas -->
+        <div class="seccion momento">
+          <div class="container">
+            <p class="antetitulo revelar">El problema</p>
+            <h2 id="t-problema" class="titulo-seccion revelar momento-titulo" style="--i:1">De cada diez perros que salen adoptados del albergue…</h2>
+
+            <div id="siluetas-escena" class="siluetas-escena" data-umbral="0.6">
+              <div id="siluetas" class="siluetas" role="img" aria-label="Diez siluetas de perro: siete se apagan y solo tres quedan a color.">
+                <span class="silueta apagada" style="--i:0"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta" style="--i:1"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta apagada" style="--i:2"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta apagada" style="--i:3"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta apagada" style="--i:4"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta" style="--i:5"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta apagada" style="--i:6"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta apagada" style="--i:7"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta" style="--i:8"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+                <span class="silueta apagada" style="--i:9"><span class="silueta-cuerpo"><svg class="capa-color" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg><svg class="capa-gris" viewBox="0 0 80 74" aria-hidden="true"><use href="#perro"/></svg></span></span>
+              </div>
+
+              <div class="row align-items-end g-4 mt-4 mt-lg-5">
+                <div class="col-md-5 col-lg-4">
+                  <p class="cifra texto-ambar mb-0 contador-siluetas" aria-hidden="true"><span id="contador-siluetas">3</span><span class="contador-de"> de 10</span></p>
+                </div>
+                <div class="col-md-7 col-lg-8">
+                  <p id="frase-siluetas" class="frase-siluetas mb-0">Solo 3 de cada 10 adopciones reciben buen cuidado.</p>
+                  <p class="text-suave mt-3 mb-0 nota-siluetas">Del resto, los perros se pierden, son atropellados o mueren. Es lo que cuenta la fundadora del albergue.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Momento 2: las excusas -->
+        <div class="seccion momento">
+          <div class="container">
+            <p class="antetitulo revelar">Cuando una adopción se rompe</p>
+            <p class="lead text-suave revelar mb-5" style="--i:1">El albergue escucha siempre las mismas tres frases:</p>
+            <div id="excusas" class="excusas" data-al-revelar data-umbral="0.35">
+              <p class="excusa" style="--i:0">“Lo atropellaron.”</p>
+              <p class="excusa" style="--i:1">“Se perdió.”</p>
+              <p class="excusa" style="--i:2">“Se murió.”</p>
+              <div class="insight">
+                <p class="insight-texto mb-0">Todas son accidentes. <span class="texto-ambar">Ninguna es responsabilidad.</span></p>
+                <p class="text-suave mt-4 mb-0 col-lg-8">Ese silencio antes del abandono no es indiferencia: es vergüenza. Por eso pedir ayuda tiene que ser más fácil que abandonar.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Momento 3: los recursos -->
+        <div class="seccion momento" id="momento-recursos">
+          <div class="container">
+            <p class="antetitulo revelar">Con qué cuenta el albergue</p>
+            <div id="cifras-recursos" class="row g-4 g-md-5 cifras-recursos escalonado" data-umbral="0.4">
+              <div class="col-md-6 revelar">
+                <p class="cifra texto-ambar mb-2"><span id="cifra-personas">3</span></p>
+                <p class="cifra-etiqueta mb-0">personas sostienen todo el albergue.</p>
+              </div>
+              <div class="col-md-6 revelar">
+                <p class="cifra texto-ambar mb-2"><span id="cifra-registros">0</span></p>
+                <p class="cifra-etiqueta mb-0">registros de seguimiento existen hoy después de la entrega.</p>
+              </div>
+            </div>
+
+            <figure class="cita-fundadora revelar mb-0">
+              <i class="bi bi-quote cita-icono" aria-hidden="true"></i>
+              <blockquote class="mb-0">
+                <p class="mb-0">“Una notificación y una foto para saber que mis perros tienen un buen hogar.”</p>
+              </blockquote>
+              <figcaption class="text-suave mt-4">La fundadora de Emilia Rescata, en las entrevistas del proyecto.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =========================================================
+         Como funciona, con un celular fijo
+         ========================================================= -->
+    <section id="como-funciona" class="seccion como-funciona" aria-labelledby="t-como">
+      <div class="container">
+        <div class="col-lg-9 mb-5 mb-lg-0">
+          <p class="antetitulo revelar">Cómo funciona</p>
+          <h2 id="t-como" class="titulo-seccion revelar" style="--i:1">Un vínculo que empieza en la entrega, no que termina en ella.</h2>
+        </div>
+
+        <div id="pasos" class="row pasos">
+          <div class="col-lg-5 col-celular">
+            <div class="celular-fijo">
+              <div class="celular" aria-hidden="true">
+                <div class="celular-pantalla" id="celular-pantalla">
+
+                  <!-- Pantalla 1: la familia envia su foto -->
+                  <div class="pantalla activa" data-pantalla="0">
+                    <div class="p-estado"><span>9:41</span><span><i class="bi bi-reception-4"></i> <i class="bi bi-battery-full"></i></span></div>
+                    <p class="p-pequeno">Reporte del mes</p>
+                    <p class="p-titulo">¿Cómo está Canela este mes?</p>
+                    <div class="p-foto">
+                      <span class="p-foto-etiqueta"><i class="bi bi-camera"></i> Foto lista</span>
+                      <svg viewBox="0 0 80 74"><use href="#perro"/></svg>
+                    </div>
+                    <div class="p-pregunta"><span>¿Come bien?</span><span class="p-chip">Sí</span></div>
+                    <div class="p-pregunta"><span>¿Vacunas al día?</span><span class="p-chip">Sí</span></div>
+                    <div class="p-pregunta"><span>¿Algún problema?</span><span class="p-chip">Todo bien</span></div>
+                    <span class="p-boton"><i class="bi bi-send"></i> Enviar</span>
+                  </div>
+
+                  <!-- Pantalla 2: aviso de vacunas -->
+                  <div class="pantalla pantalla-bloqueo" data-pantalla="1">
+                    <div class="p-estado"><span>9:41</span><span><i class="bi bi-reception-4"></i> <i class="bi bi-battery-full"></i></span></div>
+                    <p class="p-hora">9:41</p>
+                    <p class="p-fecha">lunes 16 de noviembre</p>
+                    <div class="p-aviso">
+                      <div class="p-aviso-cabeza"><span class="p-app"><i class="bi bi-heart-pulse"></i></span><strong>Sigue mi Huella</strong><span class="ms-auto p-suave">ahora</span></div>
+                      <p class="mb-0">A Canela le toca su vacuna antirrábica este viernes. En la Clínica Lobo Gris tienes 20 % de descuento.</p>
+                    </div>
+                    <div class="p-aviso p-aviso-tenue">
+                      <div class="p-aviso-cabeza"><span class="p-app"><i class="bi bi-calendar2-heart"></i></span><strong>Próximo control</strong><span class="ms-auto p-suave">en 3 semanas</span></div>
+                      <p class="mb-0">Desparasitación interna.</p>
+                    </div>
+                  </div>
+
+                  <!-- Pantalla 3: el albergue ve todo de un vistazo -->
+                  <div class="pantalla" data-pantalla="2">
+                    <div class="p-estado"><span>9:41</span><span><i class="bi bi-reception-4"></i> <i class="bi bi-battery-full"></i></span></div>
+                    <p class="p-pequeno">Panel del albergue</p>
+                    <p class="p-titulo">Hoy en el albergue</p>
+                    <div class="p-resumen">
+                      <div class="semaforo-verde"><span class="p-punto"></span><strong>38</strong><span>todo bien</span></div>
+                      <div class="semaforo-ambar"><span class="p-punto"></span><strong>6</strong><span>sin noticias</span></div>
+                      <div class="semaforo-rojo"><span class="p-punto"></span><strong>2</strong><span>por llamar</span></div>
+                    </div>
+                    <div class="p-fila semaforo-rojo"><span class="p-avatar"><svg viewBox="0 0 80 74"><use href="#perro"/></svg></span><span class="p-fila-texto"><strong>Rocky</strong><span>Familia Huamán · 64 días</span></span><span class="p-punto"></span></div>
+                    <div class="p-fila semaforo-ambar"><span class="p-avatar"><svg viewBox="0 0 80 74"><use href="#perro"/></svg></span><span class="p-fila-texto"><strong>Luna</strong><span>Familia Rojas · 41 días</span></span><span class="p-punto"></span></div>
+                    <div class="p-fila semaforo-verde"><span class="p-avatar"><svg viewBox="0 0 80 74"><use href="#perro"/></svg></span><span class="p-fila-texto"><strong>Canela</strong><span>Familia Quispe · hoy</span></span><span class="p-punto"></span></div>
+                    <div class="p-fila semaforo-verde"><span class="p-avatar"><svg viewBox="0 0 80 74"><use href="#perro"/></svg></span><span class="p-fila-texto"><strong>Tobi</strong><span>Familia Poma · 6 días</span></span><span class="p-punto"></span></div>
+                  </div>
+
+                  <!-- Pantalla 4: canal de ayuda -->
+                  <div class="pantalla" data-pantalla="3">
+                    <div class="p-estado"><span>9:41</span><span><i class="bi bi-reception-4"></i> <i class="bi bi-battery-full"></i></span></div>
+                    <p class="p-pequeno">Ayuda</p>
+                    <p class="p-titulo">¿Necesitas una mano?</p>
+                    <p class="p-texto">Esto le pasa a muchas familias. Preferimos que nos avises a tiempo.</p>
+                    <div class="p-opciones">
+                      <span class="p-opcion"><i class="bi bi-patch-question"></i>Conducta</span>
+                      <span class="p-opcion"><i class="bi bi-cash-coin"></i>Dinero</span>
+                      <span class="p-opcion elegida"><i class="bi bi-truck"></i>Mudanza</span>
+                      <span class="p-opcion"><i class="bi bi-heart"></i>No puedo seguir</span>
+                    </div>
+                    <span class="p-campo">Cuéntanos más (opcional)</span>
+                    <span class="p-boton"><i class="bi bi-life-preserver"></i> Pedir ayuda</span>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 offset-lg-1 col-bloques">
+            <article class="bloque row align-items-center g-4" data-bloque="0">
+              <div class="col-md-7 col-lg-12 bloque-texto">
+                <span class="bloque-numero revelar">1</span>
+                <h3 class="h2 mb-3 revelar" style="--i:1">Una foto y tres preguntas</h3>
+                <p class="lead mb-0 revelar" style="--i:2">Cada mes, la familia envía una foto de su perro y responde tres preguntas con un toque. Le toma cinco segundos, sin formularios largos.</p>
+              </div>
+              <div class="col-md-5 bloque-celular" data-pantalla="0"></div>
+            </article>
+            <article class="bloque row align-items-center g-4" data-bloque="1">
+              <div class="col-md-7 col-lg-12 bloque-texto">
+                <span class="bloque-numero revelar">2</span>
+                <h3 class="h2 mb-3 revelar" style="--i:1">Nadie se olvida de una vacuna</h3>
+                <p class="lead mb-0 revelar" style="--i:2">Antes de cada vacuna o desparasitación, la familia recibe un aviso con la fecha y el descuento de las veterinarias aliadas.</p>
+              </div>
+              <div class="col-md-5 bloque-celular" data-pantalla="1"></div>
+            </article>
+            <article class="bloque row align-items-center g-4" data-bloque="2">
+              <div class="col-md-7 col-lg-12 bloque-texto">
+                <span class="bloque-numero revelar">3</span>
+                <h3 class="h2 mb-3 revelar" style="--i:1">El albergue ve todo de un vistazo</h3>
+                <p class="lead mb-0 revelar" style="--i:2">Verde, ámbar o rojo. Sin menús ni pestañas: la fundadora abre una sola pantalla y sabe a qué familia llamar hoy.</p>
+              </div>
+              <div class="col-md-5 bloque-celular" data-pantalla="2"></div>
+            </article>
+            <article class="bloque row align-items-center g-4" data-bloque="3">
+              <div class="col-md-7 col-lg-12 bloque-texto">
+                <span class="bloque-numero revelar">4</span>
+                <h3 class="h2 mb-3 revelar" style="--i:1">Pedir ayuda es más fácil que abandonar</h3>
+                <p class="lead mb-0 revelar" style="--i:2">Si algo se complica, la familia elige un motivo con un toque y el albergue le responde. Sin explicaciones obligatorias, sin juicios.</p>
+              </div>
+              <div class="col-md-5 bloque-celular" data-pantalla="3"></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         El semaforo
+         ========================================================= -->
+    <section id="semaforo" class="seccion seccion-arena" aria-labelledby="t-semaforo">
+      <div class="container">
+        <div class="col-lg-9 mb-5">
+          <p class="antetitulo revelar">El semáforo</p>
+          <h2 id="t-semaforo" class="titulo-seccion revelar" style="--i:1">Tranquilidad de un solo vistazo.</h2>
+          <p class="lead text-suave mt-4 mb-0 revelar" style="--i:2">Cada adopción tiene un color que se calcula solo, con los reportes y el calendario de vacunas.</p>
+        </div>
+
+        <div class="row g-4 semaforo-tarjetas" data-al-revelar data-umbral="0.3">
+          <div class="col-md-4">
+            <article class="tarjeta-luz semaforo-verde h-100" style="--i:0">
+              <span class="luz-encendida" aria-hidden="true"></span>
+              <div class="tarjeta-luz-cuerpo">
+                <span class="foco" aria-hidden="true"></span>
+                <p class="tarjeta-luz-color mb-1">Verde</p>
+                <h3 class="h4 mb-2">Todo bien</h3>
+                <p class="mb-0">Reportó en los últimos 30 días y sus vacunas están al día.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="tarjeta-luz semaforo-ambar h-100" style="--i:1">
+              <span class="luz-encendida" aria-hidden="true"></span>
+              <div class="tarjeta-luz-cuerpo">
+                <span class="foco" aria-hidden="true"></span>
+                <p class="tarjeta-luz-color mb-1">Ámbar</p>
+                <h3 class="h4 mb-2">Hace tiempo que no sabemos</h3>
+                <p class="mb-0">Entre 31 y 60 días sin noticias. Un saludo basta.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="tarjeta-luz semaforo-rojo h-100" style="--i:2">
+              <span class="luz-encendida" aria-hidden="true"></span>
+              <div class="tarjeta-luz-cuerpo">
+                <span class="foco" aria-hidden="true"></span>
+                <p class="tarjeta-luz-color mb-1">Rojo</p>
+                <h3 class="h4 mb-2">Necesita una llamada</h3>
+                <p class="mb-0">Más de 60 días sin noticias o una vacuna vencida.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div id="barra-foco" class="barra-foco reducida" data-umbral="0.5">
+          <div class="row align-items-end g-4 mb-4">
+            <div class="col-md-7">
+              <h3 class="h2 mb-0">De perseguir a cien familias a acompañar a las que lo necesitan.</h3>
+            </div>
+            <div class="col-md-5 text-md-end">
+              <p class="cifra texto-terracota mb-0" aria-hidden="true"><span id="cuenta-barra">5</span></p>
+              <p class="fw-semibold mb-0" aria-hidden="true">familias por llamar este mes</p>
+            </div>
+          </div>
+          <div class="barra-pista" role="img" aria-label="Una barra que baja de 100 a 5 familias por llamar.">
+            <div class="barra-relleno"></div>
+          </div>
+          <div class="d-flex justify-content-between text-suave small mt-2" aria-hidden="true"><span>0</span><span>100 familias</span></div>
+          <p class="lead mt-4 mb-0 col-lg-9">El albergue deja de perseguir a cien adoptantes para atender solo a los que están en riesgo. Las demás familias siguen en verde, y eso también se celebra.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         Perros que buscan hogar (datos reales)
+         ========================================================= -->
+    <section id="perros" class="seccion" aria-labelledby="t-perros">
+      <div class="container">
+        <div class="row align-items-end g-4 mb-5">
+          <div class="col-lg-8">
+            <p class="antetitulo revelar">Perros que buscan hogar</p>
+            <h2 id="t-perros" class="titulo-seccion revelar mb-0" style="--i:1">Ellos todavía esperan una familia.</h2>
+          </div>
+          <div class="col-lg-4 text-lg-end revelar" style="--i:2">
+            <!-- Adoptar lleva al formulario oficial de Google del albergue (el mismo de
+                 ALBERGUE.formularioAdopcion en js/config.js). Las solicitudes ya las
+                 resuelve el albergue; Sigue mi Huella se ocupa de lo que pasa despues.
+                 El enlace va escrito aqui para que funcione aunque falle la red. -->
+            <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-lg-end align-items-sm-start align-items-lg-end">
+              <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLScHEohB9ejWm6yKkDnHEGjm1-myaN8jXKIytwVZHroGsFryYw/viewform" target="_blank" rel="noopener"><i class="bi bi-house-heart" aria-hidden="true"></i> Quiero adoptar</a>
+              <a class="btn btn-outline-primary" href="apadrinar.html">Ver todos y apadrinar <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            </div>
+            <p class="small text-suave mt-2 mb-0">La solicitud se hace en el formulario oficial del albergue.</p>
+          </div>
+        </div>
+
+        <div id="galeria-perros" class="row g-4 escalonado" aria-live="polite" aria-busy="true">
+          <div class="col-sm-6 col-lg-4"><div class="card h-100 overflow-hidden" aria-hidden="true"><div class="placeholder-carga ratio ratio-1x1 rounded-0"></div><div class="card-body"><div class="placeholder-carga w-50 mb-3" style="height:1.6rem"></div><div class="placeholder-carga w-75 mb-2"></div><div class="placeholder-carga w-100"></div></div></div></div>
+          <div class="col-sm-6 col-lg-4 d-none d-sm-block"><div class="card h-100 overflow-hidden" aria-hidden="true"><div class="placeholder-carga ratio ratio-1x1 rounded-0"></div><div class="card-body"><div class="placeholder-carga w-50 mb-3" style="height:1.6rem"></div><div class="placeholder-carga w-75 mb-2"></div><div class="placeholder-carga w-100"></div></div></div></div>
+          <div class="col-sm-6 col-lg-4 d-none d-lg-block"><div class="card h-100 overflow-hidden" aria-hidden="true"><div class="placeholder-carga ratio ratio-1x1 rounded-0"></div><div class="card-body"><div class="placeholder-carga w-50 mb-3" style="height:1.6rem"></div><div class="placeholder-carga w-75 mb-2"></div><div class="placeholder-carga w-100"></div></div></div></div>
+          <p class="visually-hidden">Cargando a los perros que buscan hogar.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         Apadrina y aliados
+         ========================================================= -->
+    <section id="apadrina" class="seccion seccion-arena" aria-labelledby="t-apadrina">
+      <div class="container">
+        <div class="col-lg-9 mb-5">
+          <p class="antetitulo revelar">Apadrina</p>
+          <h2 id="t-apadrina" class="titulo-seccion revelar" style="--i:1">Sostén a un perro mientras llega su familia.</h2>
+          <p class="lead text-suave mt-4 mb-0 revelar" style="--i:2">El albergue vive de donaciones que no siempre llegan. Un aporte mensual le da algo que casi nunca tiene: certeza.</p>
+        </div>
+
+        <div class="row g-4 escalonado">
+          <div class="col-md-4 revelar">
+            <a class="card card-elevable tarjeta-monto h-100" href="apadrinar.html?monto=5">
+              <div class="card-body d-flex flex-column">
+                <span class="icono-circulo mb-4"><i class="bi bi-bag-heart" aria-hidden="true"></i></span>
+                <p class="monto mb-1">USD 5</p>
+                <p class="text-suave fw-semibold mb-3">al mes</p>
+                <p class="mb-4">Apadrina a los cachorros rescatados.</p>
+                <span class="btn btn-outline-primary mt-auto align-self-start">Elegir USD 5</span>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 revelar">
+            <a class="card card-elevable tarjeta-monto tarjeta-monto-destacada h-100" href="apadrinar.html?monto=10">
+              <div class="card-body d-flex flex-column">
+                <span class="icono-circulo mb-4"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
+                <p class="monto mb-1">USD 10</p>
+                <p class="text-suave fw-semibold mb-3">al mes</p>
+                <p class="mb-4">Apadrina a los perritos mayores.</p>
+                <span class="btn btn-primary mt-auto align-self-start">Elegir USD 10</span>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 revelar">
+            <a class="card card-elevable tarjeta-monto h-100" href="apadrinar.html?monto=15">
+              <div class="card-body d-flex flex-column">
+                <span class="icono-circulo mb-4"><i class="bi bi-house-heart" aria-hidden="true"></i></span>
+                <p class="monto mb-1">USD 15</p>
+                <p class="text-suave fw-semibold mb-3">al mes</p>
+                <p class="mb-4">Apadrina a perros con enfermedades y cubre su atención médica.</p>
+                <span class="btn btn-outline-primary mt-auto align-self-start">Elegir USD 15</span>
+              </div>
+            </a>
+          </div>
+        </div>
+        <p class="text-suave mt-4 mb-0 revelar">¿Prefieres otro monto? <a href="apadrinar.html">Elígelo en la página de apadrinamiento</a>. El aporte se hace en los canales oficiales del albergue y llega directamente a ellos.</p>
+
+        <div class="aliados-bloque">
+          <div class="col-lg-8 mb-5">
+            <p class="antetitulo revelar">Aliados</p>
+            <h2 class="h2 revelar" style="--i:1">Negocios de Huancayo que acompañan a las familias.</h2>
+            <p class="text-suave mb-0 revelar" style="--i:2">Descuentos para quienes adoptan y apoyo directo al albergue.</p>
+          </div>
+          <div id="lista-aliados" class="row g-4 escalonado" aria-live="polite" aria-busy="true">
+            <div class="col-sm-6 col-lg-3"><div class="card h-100" aria-hidden="true"><div class="card-body"><div class="placeholder-carga rounded-circle mb-3" style="width:4.5rem;height:4.5rem"></div><div class="placeholder-carga w-75 mb-2"></div><div class="placeholder-carga w-100"></div></div></div></div>
+            <div class="col-sm-6 col-lg-3 d-none d-sm-block"><div class="card h-100" aria-hidden="true"><div class="card-body"><div class="placeholder-carga rounded-circle mb-3" style="width:4.5rem;height:4.5rem"></div><div class="placeholder-carga w-75 mb-2"></div><div class="placeholder-carga w-100"></div></div></div></div>
+            <p class="visually-hidden">Cargando a los aliados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         Cierre: una sola frase
+         ========================================================= -->
+    <section class="seccion-oscura cierre" aria-label="Cierre">
+      <div class="container">
+        <p id="frase-cierre" class="frase-cierre mb-0" data-umbral="0.5">
+          <span class="linea">El abandono no es un acto de crueldad.</span>
+          <span class="linea linea-acento">Es el resultado previsible de una relación que nadie sostuvo.</span>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="pie"></footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script type="module" src="js/portada.js"></script>
+</body>
+</html>

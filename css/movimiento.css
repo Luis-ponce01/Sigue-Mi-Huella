@@ -1,0 +1,135 @@
+/* =====================================================================
+   Sigue mi Huella - sistema de movimiento
+   Regla: el movimiento explica algo, nunca decora.
+   - Solo se animan transform y opacity.
+   - Nada dura mas de 600 ms, salvo la entrada inicial de la portada.
+   - El estado oculto inicial solo existe si js/movimiento.js agrego la
+     clase .js-movimiento al <html>. Sin JavaScript, o con reduccion de
+     movimiento, todo el contenido queda visible desde el principio.
+   ===================================================================== */
+
+:root {
+  /* Curvas */
+  --mov-curva: cubic-bezier(0.16, 1, 0.3, 1);        /* salida suave y decidida */
+  --mov-curva-suave: cubic-bezier(0.33, 1, 0.68, 1); /* para cruces de fundido */
+  --mov-curva-entrada: cubic-bezier(0.7, 0, 0.84, 0);
+
+  /* Duraciones */
+  --mov-rapida: 200ms;  /* pantallas internas */
+  --mov-media: 400ms;
+  --mov-lenta: 600ms;   /* maximo permitido */
+  --mov-portada: 1500ms; /* unica excepcion: entrada de la portada */
+
+  /* Escalonado */
+  --mov-escalon: 80ms;
+  --mov-distancia: 2rem;
+}
+
+/* ---------------------------------------------------------------------
+   Revelado al entrar en pantalla
+   --------------------------------------------------------------------- */
+.js-movimiento .revelar,
+.js-movimiento .revelar-escala,
+.js-movimiento .revelar-izquierda,
+.js-movimiento .revelar-derecha {
+  opacity: 0;
+  transition:
+    opacity var(--mov-lenta) var(--mov-curva),
+    transform var(--mov-lenta) var(--mov-curva);
+  transition-delay: calc(var(--i, 0) * var(--mov-escalon));
+}
+.js-movimiento .revelar { transform: translate3d(0, var(--mov-distancia), 0); }
+.js-movimiento .revelar-escala { transform: scale(0.94); }
+.js-movimiento .revelar-izquierda { transform: translate3d(calc(var(--mov-distancia) * -1.5), 0, 0); }
+.js-movimiento .revelar-derecha { transform: translate3d(calc(var(--mov-distancia) * 1.5), 0, 0); }
+
+/* will-change solo mientras el elemento espera su animacion */
+.js-movimiento :is(.revelar, .revelar-escala, .revelar-izquierda, .revelar-derecha):not(.visible) {
+  will-change: transform, opacity;
+}
+
+.js-movimiento :is(.revelar, .revelar-escala, .revelar-izquierda, .revelar-derecha).visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Revelado escalonado: los hijos usan --i como indice
+   (movimiento.js lo asigna automaticamente) */
+.js-movimiento .escalonado > * { transition-delay: calc(var(--i, 0) * var(--mov-escalon)); }
+
+/* Variante sobria para las pantallas internas: corta y funcional */
+.js-movimiento .app :is(.revelar, .revelar-escala) {
+  --mov-distancia: 0.5rem;
+  transition-duration: var(--mov-rapida), var(--mov-rapida);
+  transition-delay: calc(min(var(--i, 0), 8) * 40ms);
+}
+
+/* ---------------------------------------------------------------------
+   Titulares palabra por palabra
+   --------------------------------------------------------------------- */
+.palabra { display: inline-block; }
+.js-movimiento .palabras .palabra {
+  opacity: 0;
+  transform: translate3d(0, 0.35em, 0);
+  transition:
+    opacity var(--mov-lenta) var(--mov-curva),
+    transform var(--mov-lenta) var(--mov-curva);
+  transition-delay: calc(var(--i, 0) * var(--intervalo-palabra, 80ms));
+}
+.js-movimiento .palabras.visible .palabra { opacity: 1; transform: none; }
+
+/* Lineas (frase final de la portada) */
+.js-movimiento .lineas .linea {
+  display: block;
+  opacity: 0;
+  transform: translate3d(0, 0.6em, 0);
+  transition:
+    opacity var(--mov-lenta) var(--mov-curva),
+    transform var(--mov-lenta) var(--mov-curva);
+  transition-delay: calc(var(--i, 0) * 450ms);
+}
+.js-movimiento .lineas.visible .linea { opacity: 1; transform: none; }
+
+/* ---------------------------------------------------------------------
+   Utilidades
+   --------------------------------------------------------------------- */
+.transicion-rapida { transition: opacity var(--mov-rapida) ease, transform var(--mov-rapida) ease; }
+
+/* Indicador de scroll: movimiento suave en bucle */
+@keyframes flotar {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.85; }
+  50% { transform: translate3d(0, 0.5rem, 0); opacity: 1; }
+}
+.flotar { animation: flotar 2.4s var(--mov-curva-suave) infinite; }
+
+/* Marca de verificacion dibujada */
+.check-dibujado circle,
+.check-dibujado path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.check-dibujado circle { stroke-dasharray: 166; stroke-dashoffset: 166; animation: trazar 500ms var(--mov-curva) forwards; }
+.check-dibujado path { stroke-dasharray: 48; stroke-dashoffset: 48; animation: trazar 350ms var(--mov-curva) 400ms forwards; }
+@keyframes trazar { to { stroke-dashoffset: 0; } }
+
+/* ---------------------------------------------------------------------
+   Reduccion de movimiento: se anula todo y el contenido queda visible
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  .revelar, .revelar-escala, .revelar-izquierda, .revelar-derecha,
+  .palabra, .linea {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .flotar { animation: none !important; }
+  .check-dibujado circle, .check-dibujado path { stroke-dashoffset: 0 !important; }
+}

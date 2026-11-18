@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=AQUI_EL_PROJECT_REF",
+      "headers": {
+        "Authorization": "Bearer AQUI_EL_TOKEN"
+      }
+    }
+  }
+}

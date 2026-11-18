@@ -1,0 +1,14 @@
+/* Pantallas de ingreso, registro y recuperacion */
+.acceso-lateral {
+  position: relative;
+  align-items: flex-end;
+  padding: clamp(2rem, 5vw, 5rem);
+  background:
+    linear-gradient(180deg, rgba(28, 20, 16, 0.15) 0%, rgba(28, 20, 16, 0.92) 75%),
+    url('../img/portada.svg') center / cover no-repeat,
+    var(--smh-noche);
+}
+.acceso-lateral-texto { max-width: 34rem; }
+.acceso-caja { width: 100%; max-width: 30rem; }
+.acceso .input-group .btn { border-radius: 0 0.875rem 0.875rem 0; border-color: #d8c8b3; min-width: 52px; }
+.acceso .input-group .form-control { border-radius: 0.875rem 0 0 0.875rem; }

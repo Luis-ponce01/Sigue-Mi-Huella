@@ -1,0 +1,11 @@
+# Credenciales: nunca subir
+.mcp.json
+.env
+.env.*
+*.key
+credenciales*
+secretos*
+# Sistema
+node_modules/
+.DS_Store
+Thumbs.db

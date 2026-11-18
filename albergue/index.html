@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel del albergue | Sigue mi Huella</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../css/tema.css" rel="stylesheet">
+  <link href="../css/movimiento.css" rel="stylesheet">
+  <link href="albergue.css" rel="stylesheet">
+  <link rel="icon" href="../img/silueta.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="btn btn-primary saltar-contenido" href="#contenido">Saltar al contenido</a>
+  <header id="menu-panel"></header>
+
+  <main id="contenido" class="app">
+    <div class="container">
+      <header class="mb-4">
+        <p class="antetitulo mb-1" id="fecha-hoy"></p>
+        <h1 class="titulo-pantalla mb-0" id="saludo">Así están nuestros perros hoy</h1>
+      </header>
+
+      <!-- Cuatro numeros -->
+      <section aria-labelledby="t-indicadores" class="mb-5">
+        <h2 id="t-indicadores" class="visually-hidden">Resumen en números</h2>
+        <div class="row g-3 escalonado" id="indicadores">
+          <div class="col-6 col-lg-3 revelar">
+            <div class="card indicador"><span class="cifra" data-indicador="perros_adoptados">0</span><p>perros adoptados con seguimiento</p></div>
+          </div>
+          <div class="col-6 col-lg-3 revelar">
+            <div class="card indicador"><span class="cifra" data-indicador="reportes_mes">0</span><p>reportes este mes</p></div>
+          </div>
+          <div class="col-6 col-lg-3 revelar">
+            <div class="card indicador indicador-rojo"><span class="cifra" data-indicador="casos_rojo">0</span><p>casos que necesitan una llamada</p></div>
+          </div>
+          <div class="col-6 col-lg-3 revelar">
+            <div class="card indicador"><span class="cifra" data-indicador="porcentaje_vacunas_al_dia" data-sufijo="%">0</span><p>con vacunas al día</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lo que necesita atencion -->
+      <section aria-labelledby="t-atencion" class="mb-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+          <h2 id="t-atencion" class="mb-0">Lo que necesita atención hoy</h2>
+          <a class="btn btn-suave btn-sm" href="adopciones.html"><i class="bi bi-list-ul" aria-hidden="true"></i> Ver todas las adopciones</a>
+        </div>
+        <div id="tranquilidad"></div>
+        <ul class="list-unstyled d-grid gap-3 mb-0 escalonado" id="atencion" aria-live="polite">
+          <li class="placeholder-carga" style="height: 120px"></li>
+          <li class="placeholder-carga" style="height: 120px"></li>
+        </ul>
+      </section>
+
+      <!-- Galeria -->
+      <section aria-labelledby="t-galeria">
+        <div class="mb-3">
+          <h2 id="t-galeria" class="mb-1">Las fotos más recientes</h2>
+          <p class="text-suave mb-0">El borde muestra cómo va cada adopción: verde, todo bien; ámbar, hace tiempo que no sabemos; rojo, necesita una llamada.</p>
+        </div>
+        <ul class="galeria-panel" id="galeria"></ul>
+      </section>
+    </div>
+  </main>
+
+  <footer id="pie"></footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="index.js"></script>
+</body>
+</html>

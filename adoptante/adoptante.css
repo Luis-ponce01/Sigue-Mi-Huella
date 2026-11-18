@@ -1,0 +1,360 @@
+/* =====================================================================
+   Sigue mi Huella - portal del adoptante
+   Complementa css/tema.css y css/movimiento.css.
+   Solo se animan transform y opacity; con reduccion de movimiento todo
+   queda visible y quieto.
+   ===================================================================== */
+
+/* Ancho comodo de lectura para las pantallas del portal */
+.contenedor-app { max-width: 720px; }
+.contenedor-ancho { max-width: 1080px; }
+
+.cabecera-app .marca { font-size: 1.2rem; }
+
+/* Cuando una pagina pinta su contenido, lo funde en 200 ms */
+.fundido { animation: fundido-entra var(--mov-rapida) ease both; }
+@keyframes fundido-entra { from { opacity: 0; } to { opacity: 1; } }
+
+.cargando-portal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 40vh;
+  color: var(--smh-texto-suave);
+}
+
+/* ---------------------------------------------------------------------
+   Inicio: foto del perro y pregunta del mes
+   --------------------------------------------------------------------- */
+.saludo { font-size: 1.125rem; color: var(--smh-texto-suave); }
+
+.marco-foto {
+  position: relative;
+  border-radius: var(--smh-radio-xl);
+  overflow: hidden;
+  box-shadow: var(--smh-sombra-alta);
+  background: var(--smh-arena);
+}
+.marco-foto .foto-perro { aspect-ratio: 4 / 3; }
+.marco-foto .etiqueta-foto {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(28, 20, 16, 0.72);
+  color: var(--smh-texto-noche);
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.pregunta-mes {
+  font-size: clamp(1.9rem, 1.4rem + 2.2vw, 2.75rem);
+  line-height: 1.1;
+}
+
+/* El boton grande de la pregunta es el selector de foto */
+.boton-foto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 72px;
+  padding: 1rem 1.25rem;
+  border-radius: var(--smh-radio-lg);
+  background: var(--smh-terracota);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(162, 79, 28, 0.25);
+  transition: background-color 200ms ease, transform 200ms ease;
+}
+.boton-foto i { font-size: 1.75rem; }
+.boton-foto:hover { background: var(--smh-terracota-oscuro); }
+.boton-foto:active { transform: scale(0.98); }
+.selector-foto:focus-visible + .boton-foto { outline: 3px solid var(--smh-ambar); outline-offset: 3px; }
+.boton-foto.con-foto {
+  background: var(--smh-papel);
+  color: var(--smh-terracota);
+  border: 2px solid var(--smh-terracota);
+  box-shadow: none;
+  min-height: 56px;
+  font-size: 1.0625rem;
+}
+.boton-foto.con-foto i { font-size: 1.35rem; }
+.boton-foto.con-foto:hover { background: var(--smh-terracota-claro); }
+
+/* Input de archivo oculto pero accesible por teclado */
+.selector-foto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.enlace-discreto {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  background: none;
+  color: var(--smh-texto-suave);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.enlace-discreto:hover { color: var(--smh-terracota); }
+
+.preguntas-reporte fieldset { margin-bottom: 1.5rem; }
+.preguntas-reporte legend { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.65rem; }
+
+/* La tercera pregunta: tres botones que envian */
+.opcion-toque button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+.opcion-toque button:disabled:hover { border-color: var(--smh-borde); }
+.opcion-toque button:not(:disabled):active { transform: scale(0.98); }
+.opcion-toque button.opcion-ayuda i { color: var(--smh-rojo); }
+.opcion-toque button .spinner-border { color: var(--smh-terracota); }
+
+.indicacion-amable {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: var(--smh-texto-suave);
+  font-size: 0.9375rem;
+  margin: 0.5rem 0 0;
+}
+.indicacion-amable i { color: var(--smh-ambar-sem); margin-top: 0.1rem; }
+
+/* Comentario opcional plegado */
+.comentario-plegado summary {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--smh-terracota);
+  list-style: none;
+}
+.comentario-plegado summary::-webkit-details-marker { display: none; }
+.comentario-plegado summary i { transition: transform 200ms ease; }
+.comentario-plegado[open] summary i.bi-chevron-down { transform: rotate(180deg); }
+
+/* Reporte ya enviado este mes */
+.tarjeta-calida {
+  background: var(--smh-verde-fondo);
+  border: 1px solid var(--smh-verde-borde);
+  border-radius: var(--smh-radio-lg);
+}
+.miniatura-reporte {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--smh-radio);
+  object-fit: cover;
+  flex: none;
+  background: var(--smh-arena);
+}
+
+/* Confirmacion calida */
+.confirmacion-reporte { text-align: center; }
+.check-dibujado { width: 96px; height: 96px; display: block; margin: 0 auto 1rem; }
+.check-dibujado circle { stroke: var(--smh-verde); stroke-width: 2.5; }
+.check-dibujado path { stroke: var(--smh-verde); stroke-width: 3.5; }
+.foto-confirmacion {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--smh-radio-lg);
+  box-shadow: var(--smh-sombra);
+}
+
+/* ---------------------------------------------------------------------
+   Carnet
+   --------------------------------------------------------------------- */
+.ficha-perro .foto-perro { border-radius: var(--smh-radio-xl); box-shadow: var(--smh-sombra-alta); }
+.datos-perro { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin: 0; }
+.datos-perro > div {
+  background: var(--smh-papel);
+  border: 1px solid var(--smh-borde);
+  border-radius: var(--smh-radio);
+  padding: 0.75rem 1rem;
+  min-width: 0;
+}
+.datos-perro dt { font-size: 0.9375rem; font-weight: 600; color: var(--smh-texto-suave); }
+.datos-perro dd { margin: 0; font-weight: 700; font-size: 1.0625rem; overflow-wrap: anywhere; }
+.historia-rescate {
+  font-family: var(--smh-fuente-titulos);
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.4rem);
+  line-height: 1.45;
+  border-left: 4px solid var(--smh-ambar);
+  padding-left: 1rem;
+}
+
+/* Linea de tiempo del calendario sanitario */
+.linea-tiempo { position: relative; list-style: none; margin: 0; padding: 0 0 0 2.25rem; }
+.linea-tiempo .eje {
+  position: absolute;
+  left: 0.7rem;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--smh-borde);
+  transform-origin: top center;
+}
+.hito { position: relative; padding-bottom: 1.25rem; }
+.hito:last-child { padding-bottom: 0; }
+.hito .punto {
+  position: absolute;
+  left: -2.25rem;
+  top: 0.35rem;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 50%;
+  background: var(--sem-fondo);
+  border: 3px solid var(--sem-color);
+  display: grid;
+  place-items: center;
+  margin-left: 0.05rem;
+}
+.hito .punto i { font-size: 0.7rem; color: var(--sem-color); line-height: 1; }
+.hito .contenido-hito {
+  background: var(--smh-papel);
+  border: 1px solid var(--smh-borde);
+  border-radius: var(--smh-radio);
+  padding: 0.85rem 1rem;
+}
+.hito.semaforo-rojo .contenido-hito { background: var(--smh-rojo-fondo); border-color: var(--smh-rojo-borde); }
+.hito.semaforo-ambar .contenido-hito { background: var(--smh-ambar-fondo); border-color: var(--smh-ambar-borde); }
+
+.js-movimiento .linea-tiempo .eje { transform: scaleY(0); transition: transform 600ms var(--mov-curva); }
+.js-movimiento .linea-tiempo.visible .eje { transform: scaleY(1); }
+.js-movimiento .linea-tiempo .punto { opacity: 0; transform: scale(0.4); transition: opacity 200ms ease, transform 200ms var(--mov-curva); }
+.js-movimiento .linea-tiempo .contenido-hito { opacity: 0; transform: translate3d(0.5rem, 0, 0); transition: opacity 200ms ease, transform 200ms var(--mov-curva); }
+.js-movimiento .linea-tiempo .hito .punto,
+.js-movimiento .linea-tiempo .hito .contenido-hito { transition-delay: calc(120ms + min(var(--i, 0), 8) * 60ms); }
+.js-movimiento .linea-tiempo.visible .punto,
+.js-movimiento .linea-tiempo.visible .contenido-hito { opacity: 1; transform: none; }
+
+/* Galeria: el premio emocional */
+.galeria-mes + .galeria-mes { margin-top: 2.5rem; }
+.titulo-mes {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--smh-fuente-titulos);
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+}
+.titulo-mes::after { content: ''; flex: 1; height: 1px; background: var(--smh-borde); }
+
+.foto-reporte {
+  border-radius: var(--smh-radio-lg);
+  overflow: hidden;
+  background: var(--smh-papel);
+  border: 1px solid var(--smh-borde);
+  box-shadow: var(--smh-sombra);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.foto-reporte a.enlace-foto { display: block; }
+.foto-reporte img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: var(--smh-arena); }
+.foto-reporte .sin-foto {
+  aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.5rem;
+  background: var(--smh-arena);
+  color: var(--smh-texto-suave);
+  text-align: center;
+  padding: 1rem;
+}
+.foto-reporte .sin-foto i { font-size: 2.25rem; color: var(--smh-terracota); }
+.foto-reporte .cuerpo { padding: 1rem 1.15rem 1.15rem; flex: 1; }
+.foto-destacada { box-shadow: var(--smh-sombra-alta); }
+.foto-destacada img, .foto-destacada .sin-foto { aspect-ratio: 16 / 10; }
+.respuestas { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0; margin: 0.6rem 0 0; }
+.respuestas li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--smh-arena);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+.respuestas li i { color: var(--smh-terracota); }
+.comentario-reporte { font-style: italic; color: var(--smh-texto-suave); margin: 0.75rem 0 0; }
+
+/* ---------------------------------------------------------------------
+   Guias
+   --------------------------------------------------------------------- */
+.buscador-guias { position: relative; }
+.buscador-guias i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--smh-texto-suave);
+  pointer-events: none;
+}
+.buscador-guias .form-control { padding-left: 2.75rem; }
+.titulo-categoria { display: flex; align-items: center; gap: 0.6rem; font-size: 1.4rem; margin: 2rem 0 0.85rem; }
+.titulo-categoria:first-child { margin-top: 0; }
+.accordion-button .titulo-guia { display: block; }
+.insignia-validada {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: var(--smh-verde-fondo);
+  color: var(--smh-verde);
+  border: 1px solid var(--smh-verde-borde);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.accordion-body p:last-child { margin-bottom: 0; }
+/* Bootstrap anima la altura al plegar; aqui se reemplaza por un fundido */
+.accordion-collapse.collapsing { transition: none; }
+.accordion-collapse.show .accordion-body { animation: fundido-entra var(--mov-rapida) ease both; }
+
+/* ---------------------------------------------------------------------
+   Ayuda: movimiento muy contenido, solo fundidos
+   --------------------------------------------------------------------- */
+.motivos-ayuda { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.motivos-ayuda .opcion-toque label { min-height: 112px; font-size: 1rem; }
+.motivos-ayuda .opcion-toque input:checked + label { transform: none; }
+.salida-ayuda {
+  background: var(--smh-papel);
+  border: 1px solid var(--smh-borde);
+  border-radius: var(--smh-radio-lg);
+}
+.pasos-salida { padding-left: 1.25rem; }
+.pasos-salida li + li { margin-top: 0.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fundido, .accordion-collapse.show .accordion-body { animation: none !important; }
+  .linea-tiempo .eje, .linea-tiempo .punto, .linea-tiempo .contenido-hito { opacity: 1 !important; transform: none !important; }
+}

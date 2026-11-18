@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caso de adopción | Sigue mi Huella</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="../css/tema.css" rel="stylesheet">
+  <link href="../css/movimiento.css" rel="stylesheet">
+  <link href="albergue.css" rel="stylesheet">
+  <link rel="icon" href="../img/silueta.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="btn btn-primary saltar-contenido" href="#contenido">Saltar al contenido</a>
+  <header id="menu-panel"></header>
+
+  <main id="contenido" class="app">
+    <div class="container">
+      <p class="mb-3"><a class="btn btn-suave btn-sm" href="adopciones.html"><i class="bi bi-arrow-left" aria-hidden="true"></i> Volver a las adopciones</a></p>
+      <div id="error-caso"></div>
+
+      <div id="caso" hidden>
+        <header class="d-flex flex-wrap align-items-center gap-3 mb-4">
+          <img id="caso-foto" class="foto-redonda borde-semaforo" width="96" height="96" alt="" src="../img/sin-foto.svg">
+          <div class="min-w-0">
+            <h1 class="titulo-pantalla mb-1 texto-cortado" id="caso-titulo">Caso</h1>
+            <div class="d-flex flex-wrap gap-2 align-items-center" id="caso-insignias"></div>
+          </div>
+        </header>
+
+        <div class="row g-4">
+          <!-- Columna izquierda: perro, familia y estado -->
+          <div class="col-lg-4 d-grid gap-4 align-content-start">
+            <section class="card" aria-labelledby="t-familia">
+              <div class="card-body">
+                <h2 id="t-familia" class="h4 mb-3"><i class="bi bi-house-heart texto-terracota" aria-hidden="true"></i> La familia</h2>
+                <div id="familia-datos"></div>
+                <div class="d-grid gap-2 mt-3" id="familia-contacto"></div>
+              </div>
+            </section>
+
+            <section class="card" aria-labelledby="t-perro">
+              <div class="card-body">
+                <h2 id="t-perro" class="h4 mb-3"><i class="bi bi-heart texto-terracota" aria-hidden="true"></i> El perro</h2>
+                <div id="perro-datos"></div>
+              </div>
+            </section>
+
+            <section class="card" aria-labelledby="t-estado">
+              <div class="card-body">
+                <h2 id="t-estado" class="h4 mb-3"><i class="bi bi-flag texto-terracota" aria-hidden="true"></i> Estado de la adopción</h2>
+                <label class="form-label" for="estado-adopcion">Estado</label>
+                <select class="form-select mb-3" id="estado-adopcion">
+                  <option value="activa">Activa</option>
+                  <option value="devuelta">Devuelta al albergue</option>
+                  <option value="cerrada">Cerrada</option>
+                </select>
+                <button class="btn btn-outline-primary w-100" type="button" id="btn-cambiar-estado">Cambiar estado</button>
+                <div class="confirmacion p-3 mt-3" id="confirmar-estado" hidden role="alertdialog" aria-labelledby="confirmar-estado-texto">
+                  <p class="mb-3" id="confirmar-estado-texto"></p>
+                  <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-primary" type="button" id="btn-confirmar-estado">Sí, cambiar</button>
+                    <button class="btn btn-suave" type="button" id="btn-cancelar-estado">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- Columna derecha -->
+          <div class="col-lg-8 d-grid gap-4 align-content-start">
+            <section class="card" aria-labelledby="t-salud">
+              <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                  <h2 id="t-salud" class="h4 mb-0"><i class="bi bi-shield-check texto-terracota" aria-hidden="true"></i> Estado sanitario</h2>
+                  <button class="btn btn-suave btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#form-vacuna-zona" aria-expanded="false" aria-controls="form-vacuna-zona">
+                    <i class="bi bi-plus-lg" aria-hidden="true"></i> Agregar vacuna
+                  </button>
+                </div>
+                <div class="collapse" id="form-vacuna-zona">
+                  <form id="form-vacuna" class="border rounded-4 p-3 mb-3" novalidate>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label" for="vac-tipo">Vacuna o tratamiento</label>
+                        <input class="form-control" id="vac-tipo" list="tipos-vacuna" required maxlength="80">
+                        <datalist id="tipos-vacuna">
+                          <option value="Antirrábica"></option>
+                          <option value="Séxtuple (refuerzo)"></option>
+                          <option value="Desparasitación interna"></option>
+                          <option value="Desparasitación externa"></option>
+                        </datalist>
+                      </div>
+                      <fieldset class="col-md-6">
+                        <legend class="form-label fs-6">¿Ya se aplicó?</legend>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="vac-situacion" id="vac-programada" value="programada" checked>
+                          <label class="form-check-label" for="vac-programada">No, está programada</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="vac-situacion" id="vac-aplicada" value="aplicada">
+                          <label class="form-check-label" for="vac-aplicada">Sí, ya se aplicó</label>
+                        </div>
+                      </fieldset>
+                      <div class="col-md-6">
+                        <label class="form-label" for="vac-fecha" id="vac-fecha-etiqueta">Fecha en que le toca</label>
+                        <input class="form-control" type="date" id="vac-fecha" required>
+                      </div>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                      <button class="btn btn-primary" type="submit">Guardar vacuna</button>
+                    </div>
+                    <div class="text-danger mt-2" id="vac-error" role="alert"></div>
+                  </form>
+                </div>
+                <ul class="list-unstyled d-grid gap-2 mb-0" id="vacunas"></ul>
+              </div>
+            </section>
+
+            <section class="card" aria-labelledby="t-reportes">
+              <div class="card-body">
+                <h2 id="t-reportes" class="h4 mb-3"><i class="bi bi-camera texto-terracota" aria-hidden="true"></i> Reportes de la familia</h2>
+                <div id="reportes"></div>
+              </div>
+            </section>
+
+            <section class="card" aria-labelledby="t-contactos">
+              <div class="card-body">
+                <h2 id="t-contactos" class="h4 mb-1"><i class="bi bi-telephone texto-terracota" aria-hidden="true"></i> Contactos realizados</h2>
+                <p class="text-suave">Anótalos aquí para que nadie del equipo repita la llamada.</p>
+                <form id="form-contacto" class="row g-3 mb-3" novalidate>
+                  <div class="col-sm-5">
+                    <label class="form-label" for="contacto-medio">Medio</label>
+                    <select class="form-select" id="contacto-medio">
+                      <option value="whatsapp">WhatsApp</option>
+                      <option value="llamada">Llamada</option>
+                      <option value="visita">Visita</option>
+                      <option value="otro">Otro</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-7">
+                    <label class="form-label" for="contacto-resultado">¿Cómo fue?</label>
+                    <input class="form-control" id="contacto-resultado" maxlength="300" required placeholder="Por ejemplo: contestó, todo bien">
+                  </div>
+                  <div class="col-12 d-flex flex-wrap gap-2 align-items-center">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-plus-lg" aria-hidden="true"></i> Anotar contacto</button>
+                    <span class="text-danger" id="contacto-error" role="alert"></span>
+                  </div>
+                </form>
+                <ul class="list-unstyled d-grid gap-2 mb-0" id="contactos"></ul>
+              </div>
+            </section>
+
+            <section class="card" aria-labelledby="t-notas">
+              <div class="card-body">
+                <h2 id="t-notas" class="h4 mb-1"><i class="bi bi-journal-text texto-terracota" aria-hidden="true"></i> Notas internas del equipo</h2>
+                <p class="text-suave">Solo las ve el equipo del albergue. La familia nunca tiene acceso a ellas.</p>
+                <form id="form-nota" class="mb-3" novalidate>
+                  <label class="form-label" for="nota-texto">Nueva nota</label>
+                  <textarea class="form-control" id="nota-texto" maxlength="1000" required></textarea>
+                  <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-plus-lg" aria-hidden="true"></i> Guardar nota</button>
+                    <span class="text-danger" id="nota-error" role="alert"></span>
+                  </div>
+                </form>
+                <ul class="list-unstyled d-grid gap-2 mb-0" id="notas"></ul>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="pie"></footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="caso.js"></script>
+</body>
+</html>

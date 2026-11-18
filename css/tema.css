@@ -1,0 +1,512 @@
+/* =====================================================================
+   Sigue mi Huella - tema sobre Bootstrap 5.3
+   Paleta calida de tierra y ambar. Sobrescribe variables de Bootstrap
+   y define los componentes propios del proyecto.
+   ===================================================================== */
+
+:root {
+  /* Paleta base */
+  --smh-crema: #fbf6ef;
+  --smh-papel: #ffffff;
+  --smh-arena: #f3e9dc;
+  --smh-borde: #e5d8c7;
+  --smh-texto: #2a201a;
+  --smh-texto-suave: #6b5a4d;
+  --smh-terracota: #a24f1c;
+  --smh-terracota-rgb: 162, 79, 28;
+  --smh-terracota-oscuro: #843f15;
+  --smh-terracota-claro: #f4e1d3;
+  --smh-ambar: #e3a33b;
+  --smh-ambar-claro: #f6d9a6;
+  --smh-oliva: #5f6f4a;
+
+  /* Fondo oscuro calido para la narrativa de la portada */
+  --smh-noche: #1c1410;
+  --smh-noche-2: #2a1f19;
+  --smh-texto-noche: #f4e9dc;
+  --smh-texto-noche-suave: #c9b6a3;
+
+  /* Semaforo en tonos suaves: informan sin alarmar */
+  --smh-verde: #4f7d4a;
+  --smh-verde-fondo: #e7efe1;
+  --smh-verde-borde: #9dbb93;
+  --smh-ambar-sem: #8a5a12;
+  --smh-ambar-fondo: #f8ebd2;
+  --smh-ambar-borde: #e0b66a;
+  --smh-rojo: #9b3b2a;
+  --smh-rojo-fondo: #f6e1db;
+  --smh-rojo-borde: #d9937f;
+
+  /* Tipografia */
+  --smh-fuente-titulos: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --smh-fuente-texto: 'Figtree', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --smh-t-portada: clamp(3rem, 1.6rem + 7vw, 7rem);
+  --smh-t-seccion: clamp(2.25rem, 1.4rem + 3.6vw, 4.25rem);
+  --smh-t-cifra: clamp(3.5rem, 2rem + 7vw, 8rem);
+  --smh-t-h2: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  --smh-t-lead: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+
+  /* Forma */
+  --smh-radio: 1rem;
+  --smh-radio-lg: 1.5rem;
+  --smh-radio-xl: 2rem;
+  --smh-sombra: 0 1px 2px rgba(42, 32, 26, 0.06), 0 8px 24px rgba(42, 32, 26, 0.07);
+  --smh-sombra-alta: 0 2px 4px rgba(42, 32, 26, 0.06), 0 18px 40px rgba(42, 32, 26, 0.12);
+  --smh-espacio-seccion: clamp(4.5rem, 2rem + 8vw, 8rem);
+
+  /* Variables de Bootstrap */
+  --bs-primary: var(--smh-terracota);
+  --bs-primary-rgb: var(--smh-terracota-rgb);
+  --bs-primary-text-emphasis: var(--smh-terracota-oscuro);
+  --bs-primary-bg-subtle: var(--smh-terracota-claro);
+  --bs-primary-border-subtle: #e2b99c;
+  --bs-secondary: var(--smh-texto-suave);
+  --bs-secondary-rgb: 107, 90, 77;
+  --bs-secondary-color: var(--smh-texto-suave);
+  --bs-body-bg: var(--smh-crema);
+  --bs-body-bg-rgb: 251, 246, 239;
+  --bs-body-color: var(--smh-texto);
+  --bs-body-color-rgb: 42, 32, 26;
+  --bs-emphasis-color: #1a130f;
+  --bs-tertiary-bg: var(--smh-arena);
+  --bs-secondary-bg: var(--smh-arena);
+  --bs-border-color: var(--smh-borde);
+  --bs-border-color-translucent: rgba(42, 32, 26, 0.12);
+  --bs-border-radius: var(--smh-radio);
+  --bs-border-radius-sm: 0.625rem;
+  --bs-border-radius-lg: var(--smh-radio-lg);
+  --bs-border-radius-xl: var(--smh-radio-xl);
+  --bs-border-radius-pill: 50rem;
+  --bs-link-color: var(--smh-terracota);
+  --bs-link-color-rgb: var(--smh-terracota-rgb);
+  --bs-link-hover-color: var(--smh-terracota-oscuro);
+  --bs-link-hover-color-rgb: 132, 63, 21;
+  --bs-body-font-family: var(--smh-fuente-texto);
+  --bs-body-font-size: 1.0625rem; /* 17px: nunca menos */
+  --bs-body-line-height: 1.6;
+  --bs-focus-ring-color: rgba(227, 163, 59, 0.55);
+  --bs-success: var(--smh-verde);
+  --bs-success-rgb: 79, 125, 74;
+  --bs-warning: var(--smh-ambar);
+  --bs-danger: var(--smh-rojo);
+  --bs-danger-rgb: 155, 59, 42;
+  --bs-heading-color: var(--bs-emphasis-color);
+}
+
+html { font-size: 100%; scroll-behavior: auto; }
+body {
+  font-size: var(--bs-body-font-size);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+small, .small { font-size: 0.9375rem; } /* 15px minimo para notas */
+
+h1, h2, h3, .h1, .h2, .h3, .titulo {
+  font-family: var(--smh-fuente-titulos);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  font-optical-sizing: auto;
+}
+h2, .h2 { font-size: var(--smh-t-h2); }
+h4, h5, h6, .h4, .h5, .h6 { font-weight: 700; }
+.lead { font-size: var(--smh-t-lead); font-weight: 400; }
+.titulo-portada {
+  font-family: var(--smh-fuente-titulos);
+  font-size: var(--smh-t-portada);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.titulo-seccion {
+  font-family: var(--smh-fuente-titulos);
+  font-size: var(--smh-t-seccion);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+.cifra {
+  font-family: var(--smh-fuente-titulos);
+  font-size: var(--smh-t-cifra);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.antetitulo {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--smh-terracota);
+}
+.text-suave { color: var(--smh-texto-suave) !important; }
+
+a { text-underline-offset: 0.2em; }
+:focus-visible {
+  outline: 3px solid var(--smh-ambar);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------
+   Botones: minimo 48px de alto
+   --------------------------------------------------------------------- */
+.btn {
+  --bs-btn-padding-y: 0.7rem;
+  --bs-btn-padding-x: 1.4rem;
+  --bs-btn-font-size: 1.0625rem;
+  --bs-btn-font-weight: 600;
+  --bs-btn-border-radius: 999px;
+  --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(227, 163, 59, 0.5);
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn-lg { --bs-btn-padding-y: 0.95rem; --bs-btn-padding-x: 1.9rem; --bs-btn-font-size: 1.1875rem; min-height: 56px; }
+.btn-sm { --bs-btn-padding-y: 0.5rem; --bs-btn-padding-x: 1rem; --bs-btn-font-size: 1rem; min-height: 48px; }
+
+.btn-primary {
+  --bs-btn-bg: var(--smh-terracota);
+  --bs-btn-border-color: var(--smh-terracota);
+  --bs-btn-hover-bg: var(--smh-terracota-oscuro);
+  --bs-btn-hover-border-color: var(--smh-terracota-oscuro);
+  --bs-btn-active-bg: #6f3411;
+  --bs-btn-active-border-color: #6f3411;
+  --bs-btn-disabled-bg: #c08a68;
+  --bs-btn-disabled-border-color: #c08a68;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--smh-terracota);
+  --bs-btn-border-color: var(--smh-terracota);
+  --bs-btn-hover-bg: var(--smh-terracota);
+  --bs-btn-hover-border-color: var(--smh-terracota);
+  --bs-btn-active-bg: var(--smh-terracota-oscuro);
+  --bs-btn-active-border-color: var(--smh-terracota-oscuro);
+  border-width: 2px;
+}
+.btn-ambar {
+  --bs-btn-color: var(--smh-noche);
+  --bs-btn-bg: var(--smh-ambar);
+  --bs-btn-border-color: var(--smh-ambar);
+  --bs-btn-hover-color: var(--smh-noche);
+  --bs-btn-hover-bg: #efb658;
+  --bs-btn-hover-border-color: #efb658;
+  --bs-btn-active-bg: #d4922a;
+  --bs-btn-active-color: var(--smh-noche);
+}
+.btn-claro {
+  --bs-btn-color: var(--smh-texto-noche);
+  --bs-btn-border-color: rgba(244, 233, 220, 0.6);
+  --bs-btn-hover-color: var(--smh-noche);
+  --bs-btn-hover-bg: var(--smh-texto-noche);
+  --bs-btn-hover-border-color: var(--smh-texto-noche);
+  border-width: 2px;
+}
+.btn-suave {
+  --bs-btn-color: var(--smh-texto);
+  --bs-btn-bg: var(--smh-arena);
+  --bs-btn-border-color: var(--smh-borde);
+  --bs-btn-hover-bg: #ebdcc8;
+  --bs-btn-hover-border-color: #dccab3;
+  --bs-btn-active-bg: #e2d0b8;
+}
+.btn-whatsapp {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #1f7a4d;
+  --bs-btn-border-color: #1f7a4d;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #186340;
+  --bs-btn-hover-border-color: #186340;
+}
+.btn-link { --bs-btn-color: var(--smh-terracota); --bs-btn-hover-color: var(--smh-terracota-oscuro); }
+
+/* ---------------------------------------------------------------------
+   Tarjetas
+   --------------------------------------------------------------------- */
+.card {
+  --bs-card-border-radius: var(--smh-radio-lg);
+  --bs-card-inner-border-radius: calc(var(--smh-radio-lg) - 1px);
+  --bs-card-border-color: var(--smh-borde);
+  --bs-card-bg: var(--smh-papel);
+  --bs-card-spacer-y: 1.5rem;
+  --bs-card-spacer-x: 1.5rem;
+  box-shadow: var(--smh-sombra);
+}
+.card-elevable { transition: transform 200ms ease, box-shadow 200ms ease; }
+.card-elevable:hover { transform: translateY(-4px); box-shadow: var(--smh-sombra-alta); }
+
+.foto-perro {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: var(--smh-arena);
+  display: block;
+}
+.foto-redonda { border-radius: 50%; object-fit: cover; aspect-ratio: 1 / 1; }
+
+/* ---------------------------------------------------------------------
+   Formularios
+   --------------------------------------------------------------------- */
+.form-control, .form-select {
+  min-height: 52px;
+  font-size: 1.0625rem;
+  border-radius: 0.875rem;
+  border-color: #d8c8b3;
+  background-color: var(--smh-papel);
+}
+textarea.form-control { min-height: 110px; }
+.form-control:focus, .form-select:focus {
+  border-color: var(--smh-ambar);
+  box-shadow: 0 0 0 0.25rem rgba(227, 163, 59, 0.3);
+}
+.form-label { font-weight: 600; margin-bottom: 0.4rem; }
+.form-check-input { width: 1.5em; height: 1.5em; margin-top: 0.1em; border-color: #b9a58e; }
+.form-check-input:checked { background-color: var(--smh-terracota); border-color: var(--smh-terracota); }
+.form-check-label { padding-left: 0.35rem; }
+
+/* Opciones de un toque (radios con aspecto de boton grande) */
+.opciones-toque { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); gap: 0.6rem; }
+.opcion-toque input { position: absolute; opacity: 0; pointer-events: none; }
+.opcion-toque label, .opcion-toque button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  min-height: 84px;
+  padding: 0.75rem 0.5rem;
+  border: 2px solid var(--smh-borde);
+  border-radius: var(--smh-radio);
+  background: var(--smh-papel);
+  color: var(--smh-texto);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: border-color 200ms ease, background-color 200ms ease, transform 200ms ease;
+}
+.opcion-toque label i, .opcion-toque button i { font-size: 1.6rem; color: var(--smh-terracota); }
+.opcion-toque label:hover, .opcion-toque button:hover { border-color: var(--smh-ambar); }
+.opcion-toque input:focus-visible + label { outline: 3px solid var(--smh-ambar); outline-offset: 2px; }
+.opcion-toque input:checked + label {
+  border-color: var(--smh-terracota);
+  background: var(--smh-terracota-claro);
+  transform: scale(0.98);
+}
+
+/* ---------------------------------------------------------------------
+   Semaforo
+   --------------------------------------------------------------------- */
+.semaforo-verde { --sem-color: var(--smh-verde); --sem-fondo: var(--smh-verde-fondo); --sem-borde: var(--smh-verde-borde); }
+.semaforo-ambar { --sem-color: var(--smh-ambar-sem); --sem-fondo: var(--smh-ambar-fondo); --sem-borde: var(--smh-ambar-borde); }
+.semaforo-rojo  { --sem-color: var(--smh-rojo); --sem-fondo: var(--smh-rojo-fondo); --sem-borde: var(--smh-rojo-borde); }
+
+.insignia-semaforo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: var(--sem-fondo);
+  color: var(--sem-color);
+  border: 1px solid var(--sem-borde);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+}
+.insignia-semaforo::before {
+  content: '';
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--sem-color);
+  flex: none;
+}
+.tarjeta-semaforo {
+  background: var(--sem-fondo);
+  border: 1px solid var(--sem-borde);
+  border-radius: var(--smh-radio-lg);
+  color: var(--smh-texto);
+}
+.borde-semaforo { border: 5px solid var(--sem-borde); }
+
+/* ---------------------------------------------------------------------
+   Secciones
+   --------------------------------------------------------------------- */
+.seccion { padding-block: var(--smh-espacio-seccion); }
+.seccion-oscura {
+  background: var(--smh-noche);
+  color: var(--smh-texto-noche);
+  --bs-heading-color: var(--smh-texto-noche);
+  --bs-link-color-rgb: 227, 163, 59;
+}
+.seccion-oscura .text-suave { color: var(--smh-texto-noche-suave) !important; }
+.seccion-oscura .antetitulo { color: var(--smh-ambar); }
+.seccion-arena { background: var(--smh-arena); }
+.texto-ambar { color: var(--smh-ambar); }
+.texto-terracota { color: var(--smh-terracota); }
+
+/* ---------------------------------------------------------------------
+   Navegacion
+   --------------------------------------------------------------------- */
+.navbar-smh {
+  background: rgba(251, 246, 239, 0.92);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid var(--smh-borde);
+  min-height: 64px;
+}
+.navbar-smh .nav-link { font-weight: 600; color: var(--smh-texto); padding-block: 0.75rem; }
+.navbar-smh .nav-link:hover, .navbar-smh .nav-link.active { color: var(--smh-terracota); }
+.navbar-toggler { min-height: 48px; min-width: 48px; border-color: var(--smh-borde); }
+.marca, .marca-pie {
+  font-family: var(--smh-fuente-titulos);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--smh-texto);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.marca i, .marca-pie i { color: var(--smh-terracota); }
+
+/* Barra inferior estilo aplicacion (portal del adoptante) */
+.nav-inferior {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 1030;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--smh-borde);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.nav-inferior ul { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0 auto; padding: 0; list-style: none; max-width: 640px; }
+.nav-inferior a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-height: 64px;
+  color: var(--smh-texto-suave);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: color 200ms ease;
+}
+.nav-inferior a i { font-size: 1.4rem; }
+.nav-inferior a[aria-current='page'] { color: var(--smh-terracota); }
+.con-nav-inferior { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+
+/* Encabezado simple de las pantallas internas */
+.cabecera-app {
+  background: var(--smh-papel);
+  border-bottom: 1px solid var(--smh-borde);
+}
+
+/* Pie */
+#pie, .pie {
+  background: var(--smh-noche-2);
+  color: var(--smh-texto-noche-suave);
+}
+#pie a { color: var(--smh-texto-noche); }
+#pie a:hover { color: var(--smh-ambar); }
+#pie .marca-pie { color: var(--smh-texto-noche); }
+#pie .marca-pie i { color: var(--smh-ambar); }
+
+/* ---------------------------------------------------------------------
+   Avisos breves
+   --------------------------------------------------------------------- */
+.zona-avisos {
+  position: fixed;
+  inset: auto 1rem calc(96px + env(safe-area-inset-bottom, 0px)) 1rem;
+  z-index: 1090;
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 34rem;
+  padding: 0.85rem 1.2rem;
+  border-radius: var(--smh-radio);
+  background: var(--smh-noche);
+  color: var(--smh-texto-noche);
+  box-shadow: var(--smh-sombra-alta);
+  font-weight: 500;
+  animation: aviso-entra 200ms ease both;
+}
+.aviso i { color: var(--smh-ambar); font-size: 1.25rem; }
+.aviso-error i { color: #f0a08c; }
+@keyframes aviso-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ---------------------------------------------------------------------
+   Utilidades varias
+   --------------------------------------------------------------------- */
+html.verificando main, html.verificando .nav-inferior { visibility: hidden; }
+.estado-vacio {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  border: 2px dashed var(--smh-borde);
+  border-radius: var(--smh-radio-lg);
+  color: var(--smh-texto-suave);
+}
+.estado-vacio i { font-size: 2.25rem; color: var(--smh-verde); display: block; margin-bottom: 0.5rem; }
+.icono-circulo {
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: var(--smh-terracota-claro);
+  color: var(--smh-terracota);
+  font-size: 1.45rem;
+  flex: none;
+}
+.placeholder-carga { background: var(--smh-arena); border-radius: var(--smh-radio); min-height: 1.2em; }
+.sr-solo-foco:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.saltar-contenido { position: absolute; left: 1rem; top: -4rem; z-index: 2000; }
+.saltar-contenido:focus { top: 1rem; }
+.accordion {
+  --bs-accordion-border-radius: var(--smh-radio);
+  --bs-accordion-inner-border-radius: calc(var(--smh-radio) - 1px);
+  --bs-accordion-btn-padding-y: 1.1rem;
+  --bs-accordion-active-bg: var(--smh-terracota-claro);
+  --bs-accordion-active-color: var(--smh-terracota-oscuro);
+  --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(227, 163, 59, 0.4);
+  --bs-accordion-border-color: var(--smh-borde);
+}
+.accordion-button { font-weight: 600; font-size: 1.0625rem; min-height: 56px; }
+.table { --bs-table-bg: transparent; }
+.badge { font-weight: 600; font-size: 0.875rem; padding: 0.45em 0.75em; border-radius: 999px; }
+
+/* ---------------------------------------------------------------------
+   Impresion
+   --------------------------------------------------------------------- */
+.solo-imprimir { display: none !important; }
+@media print {
+  @page { margin: 1.6cm; }
+  body { background: #fff !important; color: #000; font-size: 11pt; }
+  .no-imprimir, nav, .navbar, .nav-inferior, #pie, .zona-avisos, .btn { display: none !important; }
+  .solo-imprimir { display: block !important; }
+  .card { box-shadow: none; border: 1px solid #999; }
+  a { color: #000; text-decoration: none; }
+}
+
+/* Botones de un toque desactivados (comun a todo el sitio) */
+.opcion-toque button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Transiciones internas de Bootstrap limitadas a 200 ms y sin animar altura */
+.collapsing { transition: none !important; }
+.modal.fade .modal-dialog { transition: transform 200ms ease-out; }
+.fade { transition: opacity 200ms linear; }

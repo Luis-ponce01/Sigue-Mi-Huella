@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apadrina un perro | Sigue mi Huella</title>
+  <meta name="description" content="Apadrina a un perro del albergue Emilia Rescata de Huancayo y mira en qué se usa cada sol donado.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="css/tema.css" rel="stylesheet">
+  <link href="css/movimiento.css" rel="stylesheet">
+  <link rel="icon" href="img/silueta.svg" type="image/svg+xml">
+  <style>
+    .cabecera-apadrinar { padding-block: clamp(3.5rem, 2rem + 5vw, 6rem); }
+    .perro-padrino input { position: absolute; opacity: 0; pointer-events: none; }
+    .perro-padrino label { cursor: pointer; display: block; height: 100%; border: 3px solid transparent; transition: border-color 200ms ease, transform 200ms ease; }
+    .perro-padrino input:checked + label { border-color: var(--smh-terracota); }
+    .perro-padrino input:focus-visible + label { outline: 3px solid var(--smh-ambar); outline-offset: 3px; }
+    .perro-padrino .marca-elegido { opacity: 0; transition: opacity 200ms ease; }
+    .perro-padrino input:checked + label .marca-elegido { opacity: 1; }
+    .monto-cifra { font-family: var(--smh-fuente-titulos); font-size: 2rem; font-weight: 700; line-height: 1; }
+    .grafico { width: 100%; height: auto; display: block; }
+    .grafico text { font-family: var(--smh-fuente-texto); fill: var(--smh-texto-suave); font-size: 13px; }
+    .grafico .barra { transform-box: fill-box; transform-origin: 50% 100%; }
+    .js-movimiento .grafico .barra { transform: scaleY(0); transition: transform var(--mov-lenta) var(--mov-curva); transition-delay: calc(var(--i, 0) * 60ms); }
+    .js-movimiento .grafico.visible .barra { transform: scaleY(1); }
+    .leyenda-punto { width: 0.9rem; height: 0.9rem; border-radius: 4px; display: inline-block; vertical-align: -0.1em; }
+    .marcador { background: var(--smh-ambar-fondo); border: 1px dashed var(--smh-ambar-borde); border-radius: var(--smh-radio); }
+  </style>
+</head>
+<body>
+  <a class="btn btn-primary saltar-contenido" href="#contenido">Saltar al contenido</a>
+  <nav class="navbar navbar-expand-md navbar-smh sticky-top" aria-label="Principal">
+    <div class="container">
+      <a class="marca" href="index.html"><i class="bi bi-heart-pulse" aria-hidden="true"></i> Sigue mi Huella</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menú">
+        <i class="bi bi-list fs-3" aria-hidden="true"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#perros">Perros</a></li>
+          <li class="nav-item"><a class="nav-link" href="#transparencia">En qué se usa</a></li>
+          <li class="nav-item"><a class="nav-link" href="ingresar.html">Ingresar</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main id="contenido">
+    <header class="cabecera-apadrinar seccion-oscura">
+      <div class="container">
+        <p class="antetitulo mb-3 revelar">Apadrina</p>
+        <h1 class="titulo-seccion col-lg-9 mb-4 revelar" style="--i:1">Tu aporte mensual sostiene un plato de comida, una vacuna y una segunda oportunidad.</h1>
+        <p class="lead text-suave col-lg-7 mb-0 revelar" style="--i:2">El albergue lo sostienen tres personas y donaciones que llegan cuando pueden. Un padrino convierte esa incertidumbre en algo con lo que se puede contar.</p>
+      </div>
+    </header>
+
+    <form id="formulario" novalidate>
+      <!-- Perros -->
+      <section id="perros" class="seccion pb-4" aria-labelledby="t-perros">
+        <div class="container">
+          <p class="antetitulo mb-2">Paso 1</p>
+          <h2 id="t-perros" class="mb-2">Elige a quién apadrinar</h2>
+          <p class="text-suave mb-4">O deja que el albergue destine tu aporte a quien más lo necesite este mes.</p>
+          <div id="lista-perros" class="row g-4" role="radiogroup" aria-labelledby="t-perros">
+            <div class="col-12"><div class="placeholder-carga" style="height:16rem"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Montos -->
+      <section class="py-5" aria-labelledby="t-monto">
+        <div class="container">
+          <p class="antetitulo mb-2">Paso 2</p>
+          <h2 id="t-monto" class="mb-2">Elige tu membresía mensual</h2>
+          <p class="text-suave mb-4">Son las membresías de apadrinamiento que publica el albergue, en dólares.</p>
+          <div class="row g-3" role="radiogroup" aria-labelledby="t-monto">
+            <div class="col-sm-6 col-lg-3 opcion-toque"><input type="radio" name="monto" id="m5" value="5"><label for="m5" class="h-100"><span class="monto-cifra">USD 5</span><span class="fw-normal text-suave">Apadrina cachorros rescatados</span></label></div>
+            <div class="col-sm-6 col-lg-3 opcion-toque"><input type="radio" name="monto" id="m10" value="10" checked><label for="m10" class="h-100"><span class="monto-cifra">USD 10</span><span class="fw-normal text-suave">Apadrina perritos mayores</span></label></div>
+            <div class="col-sm-6 col-lg-3 opcion-toque"><input type="radio" name="monto" id="m15" value="15"><label for="m15" class="h-100"><span class="monto-cifra">USD 15</span><span class="fw-normal text-suave">Apadrina perros con enfermedades y cubre su atención médica</span></label></div>
+            <div class="col-sm-6 col-lg-3 opcion-toque"><input type="radio" name="monto" id="motro" value="otro"><label for="motro" class="h-100"><span class="monto-cifra"><i class="bi bi-pencil" aria-hidden="true"></i></span><span>Otro monto</span></label></div>
+          </div>
+          <div id="caja-otro" class="mt-3 col-sm-6 col-lg-3" hidden>
+            <label for="otro" class="form-label">Monto mensual en dólares</label>
+            <input type="number" class="form-control" id="otro" min="5" step="1" inputmode="numeric" placeholder="Por ejemplo, 20">
+            <div class="invalid-feedback">Escribe un monto de al menos USD 5.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Datos del padrino -->
+      <section class="pb-5" aria-labelledby="t-datos">
+        <div class="container">
+          <div class="card col-lg-8">
+            <div class="card-body p-4 p-md-5">
+              <p class="antetitulo mb-2">Paso 3</p>
+              <h2 id="t-datos" class="mb-4">Tus datos</h2>
+              <div id="mensaje" class="alert d-none" role="alert"></div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input type="text" class="form-control" id="nombre" autocomplete="name" required minlength="2">
+                  <div class="invalid-feedback">Escribe tu nombre.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="correo" class="form-label">Correo electrónico</label>
+                  <input type="email" class="form-control" id="correo" autocomplete="email" required>
+                  <div class="invalid-feedback">Escribe un correo válido.</div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="acepto" required>
+                    <label class="form-check-label" for="acepto">Acepto que el albergue use mis datos solo para coordinar mi aporte, según la <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.</label>
+                    <div class="invalid-feedback">Necesitamos tu aceptación para registrarte.</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary btn-lg" id="boton"><i class="bi bi-heart" aria-hidden="true"></i> Quiero apadrinar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <!-- Confirmacion -->
+    <section id="confirmacion" class="pb-5" hidden aria-live="polite" tabindex="-1">
+      <div class="container">
+        <div class="card col-lg-8">
+          <div class="card-body p-4 p-md-5">
+            <span class="icono-circulo mb-3"><i class="bi bi-heart-fill" aria-hidden="true"></i></span>
+            <h2 class="mb-3">Gracias, <span id="conf-nombre"></span></h2>
+            <p class="lead" id="conf-texto"></p>
+            <p>Tu aporte se hace en los <strong>canales oficiales del albergue</strong> y llega directamente a ellos. Sigue mi Huella no cobra comisión ni toca el dinero.</p>
+            <p class="mb-4"><a class="btn btn-primary btn-lg" id="conf-donar" href="https://www.emiliarescataanimales.org/donaciones" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> Hacer mi aporte en la página del albergue</a></p>
+            <p class="mb-0 text-suave">El equipo del albergue te escribirá a tu correo para darte la bienvenida y contarte cómo está tu ahijado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donacion de una sola vez.
+         Decision: enlazamos a la pagina oficial de donaciones del albergue y NO
+         copiamos aqui sus cuentas bancarias ni su PayPal. Si este prototipo
+         mostrara numeros de cuenta y alguno cambiara o se transcribiera mal, el
+         dinero de una persona terminaria donde no debe, y la responsabilidad
+         seria nuestra. Enlazar a su pagina oficial evita ese riesgo y mantiene
+         una sola fuente de verdad. -->
+    <section id="donar" class="seccion pt-0" aria-labelledby="t-donar">
+      <div class="container">
+        <p class="antetitulo mb-2">Donación única</p>
+        <h2 id="t-donar" class="mb-2">¿Prefieres ayudar una sola vez?</h2>
+        <p class="text-suave mb-4 col-lg-8">El aporte se hace en los canales oficiales del albergue y llega directamente a ellos.</p>
+        <div class="row g-3 mb-4">
+          <div class="col-sm-4"><div class="card h-100"><div class="card-body p-4">
+            <span class="icono-circulo mb-3"><i class="bi bi-bag-heart" aria-hidden="true"></i></span>
+            <p class="monto-cifra mb-2">USD 5</p><p class="mb-0">Alimento</p>
+          </div></div></div>
+          <div class="col-sm-4"><div class="card h-100"><div class="card-body p-4">
+            <span class="icono-circulo mb-3"><i class="bi bi-scissors" aria-hidden="true"></i></span>
+            <p class="monto-cifra mb-2">USD 10</p><p class="mb-0">Esterilizaciones</p>
+          </div></div></div>
+          <div class="col-sm-4"><div class="card h-100"><div class="card-body p-4">
+            <span class="icono-circulo mb-3"><i class="bi bi-heart-pulse" aria-hidden="true"></i></span>
+            <p class="monto-cifra mb-2">USD 15</p><p class="mb-0">Gastos veterinarios</p>
+          </div></div></div>
+        </div>
+        <a class="btn btn-primary btn-lg" id="enlace-donar" href="https://www.emiliarescataanimales.org/donaciones" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> Donar en la página oficial del albergue</a>
+      </div>
+    </section>
+
+    <!-- Transparencia -->
+    <section id="transparencia" class="seccion seccion-arena" aria-labelledby="t-transparencia">
+      <div class="container">
+        <p class="antetitulo mb-2">Transparencia</p>
+        <h2 id="t-transparencia" class="titulo-seccion mb-3 col-lg-9">En qué se usó cada sol de los últimos seis meses</h2>
+        <p class="lead text-suave col-lg-8 mb-5">Publicamos todo lo que entra y todo lo que sale. Así sabes que tu aporte llega a donde dijimos.</p>
+
+        <div class="row g-4 mb-4" id="resumen"></div>
+
+        <div class="card mb-4">
+          <div class="card-body p-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+              <h3 class="h4 mb-0">Ingresos y gastos por mes</h3>
+              <p class="mb-0 small">
+                <span class="leyenda-punto" style="background:var(--smh-oliva)"></span> Ingresos
+                <span class="leyenda-punto ms-3" style="background:var(--smh-terracota)"></span> Gastos
+              </p>
+            </div>
+            <div id="grafico"></div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="card h-100"><div class="card-body p-4">
+              <h3 class="h4">Detalle de movimientos</h3>
+              <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                  <caption class="visually-hidden">Movimientos de los últimos seis meses</caption>
+                  <thead><tr><th scope="col">Fecha</th><th scope="col">Concepto</th><th scope="col">Categoría</th><th scope="col" class="text-end">Monto</th></tr></thead>
+                  <tbody id="tabla"></tbody>
+                </table>
+              </div>
+            </div></div>
+          </div>
+          <div class="col-lg-5">
+            <div class="card h-100"><div class="card-body p-4">
+              <h3 class="h4">A dónde fue el dinero</h3>
+              <ul class="list-unstyled d-grid gap-3 mb-0" id="categorias"></ul>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="pie"></footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module">
+    import { supabase, fotoPublica } from './js/supabase.js';
+    import { ALBERGUE } from './js/config.js';
+    import { esc, pintarPie, mensajeError, cargando, soles, fechaCorta, TEXTOS, edadAprox } from './js/comun.js';
+    import { iniciarRevelado, observar, contar } from './js/movimiento.js';
+
+    pintarPie();
+    // Los enlaces de donacion salen de la configuracion (una sola fuente de verdad)
+    document.getElementById('conf-donar').href = ALBERGUE.donaciones;
+    document.getElementById('enlace-donar').href = ALBERGUE.donaciones;
+    const dolares = (monto) => 'USD ' + Number(monto || 0).toLocaleString('es-PE', { maximumFractionDigits: 2 });
+
+    // Membresia sugerida desde la portada (?monto=10)
+    const pedido = new URLSearchParams(location.search).get('monto');
+    if (['5', '10', '15'].includes(pedido)) document.getElementById('m' + pedido).checked = true;
+
+    // ------------------------------------------------------------
+    // Perros apadrinables
+    // ------------------------------------------------------------
+    const lista = document.getElementById('lista-perros');
+    const { data: perros, error: errPerros } = await supabase
+      .from('perros').select('id, nombre, sexo, tamano, fecha_nacimiento_aprox, historia, foto_ruta')
+      .eq('estado', 'en_adopcion').order('fecha_rescate');
+
+    const tarjeta = (id, nombre, img, cuerpo, i) => `
+      <div class="col-sm-6 col-lg-4 perro-padrino revelar" style="--i:${i}">
+        <input type="radio" name="perro" id="p-${id}" value="${id}" ${id === 'general' ? 'checked' : ''}>
+        <label for="p-${id}" class="card card-elevable overflow-hidden">
+          ${img}
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start gap-2">
+              <h3 class="h4 mb-1">${nombre}</h3>
+              <i class="bi bi-check-circle-fill fs-4 texto-terracota marca-elegido" aria-hidden="true"></i>
+            </div>
+            ${cuerpo}
+          </div>
+        </label>
+      </div>`;
+
+    if (errPerros) {
+      lista.innerHTML = `<div class="col-12"><p class="estado-vacio">${esc(mensajeError(errPerros))}</p></div>`;
+    } else {
+      lista.innerHTML =
+        tarjeta('general', 'Donde más se necesite', `<div class="foto-perro d-grid seccion-oscura" style="place-items:center"><i class="bi bi-house-heart texto-ambar" style="font-size:4rem" aria-hidden="true"></i></div>`,
+          '<p class="mb-0">El albergue destina tu aporte al perro que más lo necesite cada mes.</p>', 0) +
+        (perros || []).map((p, i) => tarjeta(p.id, esc(p.nombre),
+          `<img class="foto-perro" src="${fotoPublica(p.foto_ruta)}" alt="Foto de ${esc(p.nombre)}" loading="lazy">`,
+          `<p class="text-suave mb-2">${TEXTOS.sexo[p.sexo]} · ${TEXTOS.tamano[p.tamano]} · ${edadAprox(p.fecha_nacimiento_aprox)}</p>
+           <p class="mb-0">${esc(p.historia || '')}</p>`, i + 1)).join('');
+      // Perro elegido desde la portada (?perro=<id>)
+      const perroPedido = new URLSearchParams(location.search).get('perro');
+      const radio = perroPedido && document.getElementById('p-' + perroPedido);
+      if (radio) { radio.checked = true; radio.closest('.perro-padrino').scrollIntoView({ block: 'center' }); }
+    }
+
+    // ------------------------------------------------------------
+    // Formulario
+    // ------------------------------------------------------------
+    const form = document.getElementById('formulario');
+    const cajaOtro = document.getElementById('caja-otro');
+    const campoOtro = document.getElementById('otro');
+    form.querySelectorAll('input[name="monto"]').forEach((r) => r.addEventListener('change', () => {
+      const otro = form.monto.value === 'otro';
+      cajaOtro.hidden = !otro;
+      campoOtro.required = otro;
+      if (otro) campoOtro.focus();
+    }));
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const mensaje = document.getElementById('mensaje');
+      if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
+      const monto = form.monto.value === 'otro' ? Number(campoOtro.value) : Number(form.monto.value);
+      if (!monto || monto < 5) { campoOtro.setCustomValidity('bajo'); form.classList.add('was-validated'); return; }
+      campoOtro.setCustomValidity('');
+      const perroId = form.perro?.value && form.perro.value !== 'general' ? form.perro.value : null;
+      const boton = document.getElementById('boton');
+      cargando(boton, true);
+
+      // ----------------------------------------------------------------
+      // PASARELA DE PAGO: aqui se conectaria un cobro recurrente real
+      // (por ejemplo Culqi, Niubiz o Mercado Pago). El flujo seria:
+      //   1. Crear la suscripcion en la pasarela desde una Edge Function
+      //      de Supabase (nunca desde el navegador con claves secretas).
+      //   2. Guardar el padrinazgo con estado 'pendiente'.
+      //   3. Un webhook de la pasarela marcaria el estado como 'activo'.
+      // Por ahora no se cobra nada: solo se registra el compromiso y el
+      // aporte se hace en la pagina oficial de donaciones del albergue.
+      // ----------------------------------------------------------------
+      const { error } = await supabase.from('padrinazgos').insert({
+        perro_id: perroId,
+        nombre_padrino: form.nombre.value.trim(),
+        correo_padrino: form.correo.value.trim(),
+        monto_mensual: monto,
+      });
+      cargando(boton, false);
+      if (error) {
+        mensaje.className = 'alert alert-danger';
+        mensaje.textContent = mensajeError(error);
+        return;
+      }
+      const elegido = perroId ? perros.find((p) => p.id === perroId)?.nombre : null;
+      document.getElementById('conf-nombre').textContent = form.nombre.value.trim().split(' ')[0];
+      document.getElementById('conf-texto').textContent = elegido
+        ? `Desde hoy eres padrino de ${elegido}, con ${dolares(monto)} al mes.`
+        : `Tu aporte de ${dolares(monto)} al mes irá a donde más se necesite.`;
+      form.hidden = true;
+      const conf = document.getElementById('confirmacion');
+      conf.hidden = false;
+      conf.focus();
+      conf.scrollIntoView({ block: 'start' });
+    });
+
+    // ------------------------------------------------------------
+    // Transparencia
+    // ------------------------------------------------------------
+    const desde = new Date(); desde.setMonth(desde.getMonth() - 5, 1);
+    const desdeISO = `${desde.getFullYear()}-${String(desde.getMonth() + 1).padStart(2, '0')}-01`;
+    const { data: movs, error: errMovs } = await supabase
+      .from('movimientos').select('tipo, concepto, monto, fecha, categoria')
+      .gte('fecha', desdeISO).order('fecha', { ascending: false });
+
+    if (errMovs || !movs?.length) {
+      document.getElementById('grafico').innerHTML = `<p class="estado-vacio">${errMovs ? esc(mensajeError(errMovs)) : 'Todavía no hay movimientos publicados.'}</p>`;
+    } else {
+      const totalIn = movs.filter((m) => m.tipo === 'ingreso').reduce((s, m) => s + Number(m.monto), 0);
+      const totalEg = movs.filter((m) => m.tipo === 'egreso').reduce((s, m) => s + Number(m.monto), 0);
+      const resumen = [
+        ['bi-arrow-down-circle', 'Recaudado', totalIn],
+        ['bi-arrow-up-circle', 'Invertido en los perros', totalEg],
+        ['bi-piggy-bank', 'Saldo para los próximos meses', totalIn - totalEg],
+      ];
+      document.getElementById('resumen').innerHTML = resumen.map(([ic, t, v], i) => `
+        <div class="col-md-4 revelar" style="--i:${i}"><div class="card h-100"><div class="card-body p-4">
+          <span class="icono-circulo mb-3"><i class="bi ${ic}" aria-hidden="true"></i></span>
+          <p class="text-suave mb-1">${t}</p>
+          <p class="h2 mb-0" data-monto="${v}">${soles(v)}</p>
+        </div></div></div>`).join('');
+      document.querySelectorAll('[data-monto]').forEach((el) =>
+        observar(el, () => contar(el, Number(el.dataset.monto), { duracion: 600, prefijo: 'S/ ' })));
+
+      // Agrupar por mes
+      const NOMBRES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'set', 'oct', 'nov', 'dic'];
+      const meses = [];
+      for (let k = 0; k < 6; k++) {
+        const f = new Date(desde.getFullYear(), desde.getMonth() + k, 1);
+        meses.push({ clave: `${f.getFullYear()}-${String(f.getMonth() + 1).padStart(2, '0')}`, nombre: NOMBRES[f.getMonth()], ingreso: 0, egreso: 0 });
+      }
+      movs.forEach((m) => {
+        const mes = meses.find((x) => m.fecha.startsWith(x.clave));
+        if (mes) mes[m.tipo] += Number(m.monto);
+      });
+
+      // Grafico de barras en SVG (sin librerias)
+      const ancho = 720, alto = 300, margenIzq = 56, margenInf = 34, margenSup = 12;
+      const max = Math.ceil(Math.max(...meses.flatMap((m) => [m.ingreso, m.egreso])) / 500) * 500 || 500;
+      const zona = (ancho - margenIzq) / meses.length;
+      const barra = Math.min(34, zona * 0.3);
+      const y = (v) => margenSup + (alto - margenSup - margenInf) * (1 - v / max);
+      let svg = `<svg class="grafico" viewBox="0 0 ${ancho} ${alto}" role="img" aria-labelledby="g-titulo g-desc">
+        <title id="g-titulo">Ingresos y gastos de los últimos seis meses</title>
+        <desc id="g-desc">${meses.map((m) => `${m.nombre}: ingresos ${soles(m.ingreso)}, gastos ${soles(m.egreso)}`).join('. ')}</desc>`;
+      for (let v = 0; v <= max; v += max / 4) {
+        svg += `<line x1="${margenIzq}" x2="${ancho}" y1="${y(v)}" y2="${y(v)}" stroke="#e5d8c7" stroke-width="1"/>
+                <text x="${margenIzq - 8}" y="${y(v) + 4}" text-anchor="end">${v.toLocaleString('es-PE')}</text>`;
+      }
+      meses.forEach((m, i) => {
+        const cx = margenIzq + zona * i + zona / 2;
+        svg += `<rect class="barra" style="--i:${i * 2}" x="${cx - barra - 3}" y="${y(m.ingreso)}" width="${barra}" height="${y(0) - y(m.ingreso)}" rx="5" fill="#5f6f4a"><title>Ingresos ${m.nombre}: ${soles(m.ingreso)}</title></rect>
+                <rect class="barra" style="--i:${i * 2 + 1}" x="${cx + 3}" y="${y(m.egreso)}" width="${barra}" height="${y(0) - y(m.egreso)}" rx="5" fill="#a24f1c"><title>Gastos ${m.nombre}: ${soles(m.egreso)}</title></rect>
+                <text x="${cx}" y="${alto - 10}" text-anchor="middle">${m.nombre}</text>`;
+      });
+      svg += '</svg>';
+      const contGrafico = document.getElementById('grafico');
+      contGrafico.innerHTML = svg;
+      observar(contGrafico.querySelector('svg'));
+
+      // Tabla
+      document.getElementById('tabla').innerHTML = movs.map((m) => `
+        <tr>
+          <td class="text-nowrap">${fechaCorta(m.fecha)}</td>
+          <td>${esc(m.concepto)}</td>
+          <td><span class="badge text-bg-light border">${esc(m.categoria)}</span></td>
+          <td class="text-end text-nowrap fw-semibold ${m.tipo === 'ingreso' ? 'text-success' : ''}">${m.tipo === 'ingreso' ? '+' : '−'} ${soles(m.monto)}</td>
+        </tr>`).join('');
+
+      // Gastos por categoria
+      const porCat = {};
+      movs.filter((m) => m.tipo === 'egreso').forEach((m) => { porCat[m.categoria] = (porCat[m.categoria] || 0) + Number(m.monto); });
+      const cats = Object.entries(porCat).sort((a, b) => b[1] - a[1]);
+      document.getElementById('categorias').innerHTML = cats.map(([c, v]) => {
+        const pct = Math.round((v / totalEg) * 100);
+        return `<li>
+          <div class="d-flex justify-content-between"><span class="fw-semibold">${esc(c)}</span><span>${soles(v)} · ${pct} %</span></div>
+          <div class="progress mt-1" role="progressbar" aria-label="${esc(c)}" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" style="height:.6rem">
+            <div class="progress-bar" style="width:${pct}%;background:var(--smh-terracota)"></div>
+          </div></li>`;
+      }).join('');
+    }
+
+    iniciarRevelado();
+  </script>
+</body>
+</html>
