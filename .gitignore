@@ -9,3 +9,8 @@ secretos*
 node_modules/
 .DS_Store
 Thumbs.db
+
+# Video de lanzamiento: todo fuera del repositorio. Las tomas en 4K pesan
+# cientos de MB (GitHub rechaza archivos de mas de 100 MB) y Vercel las
+# desplegaria como archivos del sitio. Incluye sesiones con tokens.
+video/

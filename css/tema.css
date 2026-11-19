@@ -374,7 +374,21 @@ textarea.form-control { min-height: 110px; }
   align-items: center;
   gap: 0.5rem;
 }
-.marca i, .marca-pie i { color: var(--smh-terracota); }
+.marca i, .marca-pie i, .marca-huella { color: var(--smh-terracota); }
+/* Huella de la marca (img/huella.svg). Bootstrap Icons no tiene huella, asi que
+   es un SVG propio. Se pinta como mascara para que tome el color de cada
+   contexto, igual que el icono anterior, y mide 1em como un Bootstrap Icon. */
+.marca-huella {
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  background-color: currentColor;
+  -webkit-mask: url("../img/huella.svg") center / contain no-repeat;
+  mask: url("../img/huella.svg") center / contain no-repeat;
+}
+.p-app .marca-huella { color: inherit; }
 
 /* Barra inferior estilo aplicacion (portal del adoptante) */
 .nav-inferior {
@@ -419,7 +433,7 @@ textarea.form-control { min-height: 110px; }
 #pie a { color: var(--smh-texto-noche); }
 #pie a:hover { color: var(--smh-ambar); }
 #pie .marca-pie { color: var(--smh-texto-noche); }
-#pie .marca-pie i { color: var(--smh-ambar); }
+#pie .marca-pie i, #pie .marca-pie .marca-huella { color: var(--smh-ambar); }
 
 /* ---------------------------------------------------------------------
    Avisos breves

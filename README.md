@@ -24,7 +24,7 @@ El insight que guía el producto: **el albergue concentra todo su rigor en elegi
 |---|---|
 | Interfaz | HTML, CSS y JavaScript (ES modules), sin compilación |
 | Diseño | Bootstrap 5.3 (CDN) personalizado en `css/tema.css` |
-| Íconos | Bootstrap Icons 1.11 (cero emojis en todo el proyecto) |
+| Íconos | Bootstrap Icons 1.11 (cero emojis en todo el proyecto); la huella de la marca y el favicon son un SVG propio, `img/huella.svg` |
 | Animación | CSS + `IntersectionObserver` (`css/movimiento.css`, `js/movimiento.js`) |
 | Datos, autenticación y archivos | Supabase (PostgreSQL, Auth, Storage, Edge Functions) con `@supabase/supabase-js` v2 desde CDN |
 | Tipografía | Fraunces (títulos) y Figtree (texto), de Google Fonts |

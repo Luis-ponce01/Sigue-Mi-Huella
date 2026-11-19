@@ -30,7 +30,7 @@ Datos del albergue: el nombre oficial es **"Emilia Rescata"** (sin "n"). Los dat
 
 ## Reglas del proyecto (de la especificación)
 
-- Cero emojis en todo (código, textos, commits, docs); todo símbolo es un Bootstrap Icon.
+- Cero emojis en todo (código, textos, commits, docs); todo símbolo es un Bootstrap Icon. Única excepción: la huella de la marca (`img/huella.svg`, Bootstrap Icons no tiene huella), que va en la cabecera y el pie como `<span class="marca-huella">` (máscara CSS en `css/tema.css`), es el favicon de todas las páginas y la usa el video de lanzamiento.
 - Interfaz en español sin anglicismos: el check-in mensual se llama "reporte del mes".
 - Animaciones: solo `transform` y `opacity`, máximo 600 ms (salvo la entrada de la portada), todo desactivado con `prefers-reduced-motion`.
 - Todo funciona desde 360 px de ancho; botones de al menos 48 px de alto; texto base de al menos 17 px.

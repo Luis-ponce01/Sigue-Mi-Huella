@@ -120,7 +120,7 @@ export function pintarPie(destino = document.getElementById('pie')) {
     <div class="container py-5">
       <div class="row g-4 align-items-start">
         <div class="col-md-5">
-          <a class="marca-pie" href="${ruta('index.html')}"><i class="bi bi-heart-pulse" aria-hidden="true"></i> Sigue mi Huella</a>
+          <a class="marca-pie" href="${ruta('index.html')}"><span class="marca-huella" aria-hidden="true"></span> Sigue mi Huella</a>
           <p class="mt-2 mb-0">Acompañamiento después de la adopción para el albergue ${esc(ALBERGUE.nombre)}, ${esc(ALBERGUE.ciudad)}.</p>
         </div>
         <nav class="col-md-4" aria-label="Enlaces del pie">

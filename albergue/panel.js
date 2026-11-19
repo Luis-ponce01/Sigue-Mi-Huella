@@ -25,7 +25,7 @@ function pintarMenu(activo) {
   destino.innerHTML = `
     <nav class="navbar navbar-expand-lg navbar-smh sticky-top no-imprimir" aria-label="Menú del panel">
       <div class="container">
-        <a class="marca" href="index.html"><i class="bi bi-heart-pulse" aria-hidden="true"></i> Sigue mi Huella <span class="etiqueta-panel">Panel</span></a>
+        <a class="marca" href="index.html"><span class="marca-huella" aria-hidden="true"></span> Sigue mi Huella <span class="etiqueta-panel">Panel</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-panel-enlaces"
           aria-controls="menu-panel-enlaces" aria-expanded="false" aria-label="Abrir el menú">
           <span class="navbar-toggler-icon"></span>
